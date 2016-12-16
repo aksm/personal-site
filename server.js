@@ -6,13 +6,11 @@ var app = express();
 // var dotenv = require("dotenv");
 // dotenv.load();
 
-
 // Set port
 app.set("port", process.env.PORT || 8080);
 
 // Set static
 app.use(express.static("public"));
-
 // Routes
 // =============================================================
 require("./routes/routes.js")(app);
