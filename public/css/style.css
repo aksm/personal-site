@@ -1,31 +1,12 @@
 /* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
 
 #bio-text {
   line-height: 1.5em;
 }
-/*.icon-block {
-  padding: 0 15px;
+.social {
+  padding: 5px;
 }
-.icon-block .material-icons {
-	font-size: inherit;
-}*/
-@media screen and (min-width: 25em){
-  #ascii {
-    font-size: calc(12px + (14 - 12) * (100vw - 400px) / (800 - 400));
-  }
-  .coming {
-    font-size: calc(6px + (10 - 6) * (100vw - 400px) / (800 - 400));
-  }
-  .soon {
-    font-size: calc(6px + (10 - 6) * (100vw - 400px) / (800 - 400));
-  }
-}
+
 .indicator {
   background-color: #000 !important;
 }
@@ -63,3 +44,15 @@ main {
    border-bottom: 1px solid #000 !important;
    box-shadow: 0 1px 0 0 #000 !important
  }
+
+ @media screen and (min-width: 25em){
+  #ascii {
+    font-size: calc(12px + (14 - 12) * (100vw - 400px) / (800 - 400));
+  }
+  .coming {
+    font-size: calc(6px + (10 - 6) * (100vw - 400px) / (800 - 400));
+  }
+  .soon {
+    font-size: calc(6px + (10 - 6) * (100vw - 400px) / (800 - 400));
+  }
+}
