@@ -7,7 +7,8 @@
       window.setTimeout(switchPic, 3200);
 
     var ascii = document.querySelector("#ascii");
-    AsciiMorph(ascii, {x: 0, y: 20});
+    var asciiHeader = new AsciiMorph();
+    asciiHeader.morph(ascii, {x: 0, y: 20});
     var keyboard = [
 
       " _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ ",
@@ -89,8 +90,8 @@
       "     \\/__/         \\/__/         \\/__/         \\/__/    "
 
     ];
-    AsciiMorph.render(keyboard);
-    AsciiMorph.morph(name);
+    asciiHeader.morph.render(keyboard);
+    asciiHeader.morph.morph(name);
 
 
     function switchAscii() {
@@ -117,13 +118,21 @@
     $(".soon-trigger").on("click", function() {
       var comingAscii = document.querySelectorAll(".coming");
       for(var i = 0; i < comingAscii.length; i++) {
-      AsciiMorph(comingAscii[i], {x: 0, y: 20});
-      AsciiMorph.render(coming);
+      var comingAsciiMorph = new AsciiMorph();
+      comingAsciiMorph.morph(comingAscii[i], {x: 0, y: 20});
+      comingAsciiMorph.morph.render(coming);
+      comingAsciiMorph.morph.morph(coming);
+      // AsciiMorph(comingAscii[i], {x: 0, y: 20});
+      // AsciiMorph.render(coming);
       }
       var soonAscii = document.querySelectorAll(".soon");
       for(i = 0; i < soonAscii.length; i++) {
-      AsciiMorph(soonAscii[i], {x: 0, y: 20});
-      AsciiMorph.render(soon);
+      var soonAsciiMorph = new AsciiMorph();
+      soonAsciiMorph.morph(soonAscii[i], {x: 0, y: 20});
+      soonAsciiMorph.morph.render(soon);
+      soonAsciiMorph.morph.morph(soon);
+      // AsciiMorph(soonAscii[i], {x: 0, y: 20});
+      // AsciiMorph.render(soon);
       }
 
     });

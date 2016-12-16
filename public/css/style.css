@@ -19,6 +19,12 @@
   #ascii {
     font-size: calc(12px + (14 - 12) * (100vw - 400px) / (800 - 400));
   }
+  .coming {
+    font-size: calc(6px + (10 - 6) * (100vw - 400px) / (800 - 400));
+  }
+  .soon {
+    font-size: calc(6px + (10 - 6) * (100vw - 400px) / (800 - 400));
+  }
 }
 .indicator {
   background-color: #000 !important;
