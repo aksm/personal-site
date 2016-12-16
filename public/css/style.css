@@ -6,12 +6,54 @@
  * Made By MaterializeCSS.com
  */
 
-.icon-block {
+#bio-text {
+  line-height: 1.5em;
+}
+/*.icon-block {
   padding: 0 15px;
 }
 .icon-block .material-icons {
 	font-size: inherit;
-}
-/*#ascii {
-  font-size: 12px;
 }*/
+@media screen and (min-width: 25em){
+  #ascii {
+    font-size: calc(12px + (14 - 12) * (100vw - 400px) / (800 - 400));
+  }
+}
+.indicator {
+  background-color: #000 !important;
+}
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+ /* label focus color */
+   .input-field textarea:focus + label {
+     color: #000 !important;
+}
+/* label underline focus color */
+   .input-field textarea:focus {
+     border-bottom: 1px solid #000 !important;
+     box-shadow: 0 1px 0 0 #000 !important;
+   }
+/* label focus color */
+ .input-field input:focus + label {
+   color: #000 !important;
+ }
+ /* label underline focus color */
+ .row .input-field input:focus {
+   border-bottom: 1px solid #000 !important;
+   box-shadow: 0 1px 0 0 #000 !important
+ }
