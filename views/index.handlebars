@@ -153,19 +153,19 @@
       <form class="col s8 m6 l6 offset-s2 offset-m3 offset-l3" method="POST" action="/contact?_method=POST">
         <div class="row">
           <div class="input-field col s12">
-            <input name="name" id="name" type="text" class="validate">
+            <input name="name" id="name" type="text" class="validate" required="required">
             <label for="name">Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input name="email" id="email" type="email" class="validate">
+            <input name="email" id="email" type="email" class="validate" required="required">
             <label for="email">Email</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="message" name="message" class="materialize-textarea"></textarea>
+            <textarea id="message" name="message" class="materialize-textarea" required="required"></textarea>
             <label for="message">Message</label>
           </div>
         </div>
