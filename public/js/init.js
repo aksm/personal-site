@@ -1,10 +1,12 @@
-(function($){
-  $(function(){
-      function profileFade() {
-        $("#profile-ascii").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-      }
-      window.setTimeout(profileFade, 2500);      
-      window.setTimeout(switchPic, 3200);
+(function($) {
+  $(function() {
+    $("#blog-admin").modal();
+
+    function profileFade() {
+      $("#profile-ascii").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+    }
+    window.setTimeout(profileFade, 2500);      
+    window.setTimeout(switchPic, 3200);
 
     var ascii = document.querySelector("#ascii");
     var asciiHeader = new AsciiMorph();
@@ -106,15 +108,7 @@
       $("#profile-pic").addClass("show");
       $("#profile-pic").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     }
-    // function comingSoon() {
-    //   var comingAscii = document.querySelector(".coming");
-    //   AsciiMorph(comingAscii, {x: 0, y: 20});
-    //   AsciiMorph.render(coming);
-    //   var soonAscii = document.querySelector(".soon");
-    //   AsciiMorph(soonAscii, {x: 0, y: 20});
-    //   AsciiMorph.render(soon);
-      
-    // }
+
     $(".soon-trigger").on("click", function() {
       var comingAscii = document.querySelectorAll(".coming");
       for(var i = 0; i < comingAscii.length; i++) {
@@ -122,8 +116,6 @@
       comingAsciiMorph.morph(comingAscii[i], {x: 0, y: 20});
       comingAsciiMorph.morph.render(coming);
       comingAsciiMorph.morph.morph(coming);
-      // AsciiMorph(comingAscii[i], {x: 0, y: 20});
-      // AsciiMorph.render(coming);
       }
       var soonAscii = document.querySelectorAll(".soon");
       for(i = 0; i < soonAscii.length; i++) {
@@ -131,8 +123,6 @@
       soonAsciiMorph.morph(soonAscii[i], {x: 0, y: 20});
       soonAsciiMorph.morph.render(soon);
       soonAsciiMorph.morph.morph(soon);
-      // AsciiMorph(soonAscii[i], {x: 0, y: 20});
-      // AsciiMorph.render(soon);
       }
 
     });
@@ -141,6 +131,10 @@
       switchAscii();
       window.setTimeout(profileFade, 2500);      
       window.setTimeout(switchPic, 3200);
+    });
+
+    $("#copyright").dblclick(function() {
+      $("#blog-admin").modal("open");
     });
   }); // end of document ready
 })(jQuery); // end of jQuery name space

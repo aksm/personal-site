@@ -1,0 +1,47 @@
+(function($) {
+  $(function() {
+
+    var ascii = document.querySelector("#ascii");
+    var asciiHeader = new AsciiMorph();
+    asciiHeader.morph(ascii, {x: 0, y: 20});
+    var backstage = [
+
+      "╔╗ ┌─┐┌─┐┬┌─┌─┐┌┬┐┌─┐┌─┐┌─┐",
+      "╠╩╗├─┤│  ├┴┐└─┐ │ ├─┤│ ┬├┤ ",
+      "╚═╝┴ ┴└─┘┴ ┴└─┘ ┴ ┴ ┴└─┘└─┘"
+
+    ];
+    asciiHeader.morph.render(backstage);
+    asciiHeader.morph.morph(backstage);
+
+    showdown.setFlavor("github");
+    showdown.setOption("smoothLivePreview", "true");
+    var converter = new showdown.Converter();
+    $("#blog-content").keyup(function(){
+      var txt = $("#blog-content").val();
+      var html = converter.makeHtml(txt);
+      $("#blog-post-preview").html(html);
+
+    });
+    
+    // Chip functions
+    $(".chips").material_chip({
+      placeholder: "tag+",
+      secondaryPlaceholder: "tag+"
+    });
+    $(".chips").on("chip.add", function(e, chip) {
+      var tags = $("#blog-tags");
+      var tagArray = JSON.parse(tags.val());
+      tagArray.push(chip.tag);
+      tags.val(JSON.stringify(tagArray));
+    });
+    $(".chips").on("chip.delete", function(e, chip){
+      var tags = $("#blog-tags");
+      var tagArray = JSON.parse(tags.val());
+      var tagIndex = tagArray.indexOf(chip.tag);
+      tagArray.splice(tagIndex, 1);
+      tags.val(JSON.stringify(tagArray));
+    });
+
+  }); // end of document ready
+})(jQuery); // end of jQuery name space

@@ -1,0 +1,122 @@
+<header>
+  <div class="container center">
+    <div class="row">
+      <pre class="black-text col s12 m12 l12" id="ascii"></pre>
+    </div>
+
+  <nav class="white z-depth-0">
+    <div class="container">
+      <div class="row">
+
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s3">
+              <a class="active black-text" href="#blog">Blog</a>
+            </li>
+            <li class="tab col s3">
+              <a class="black-text" href="#admin2">Admin2</a>
+            </li>
+            <li class="tab col s3">
+              <a class="black-text" href="#admin3">Admin3</a>
+            </li>
+            <li class="tab col s3">
+              <a class="black-text" href="#admin4">Admin4</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+<br><br>
+
+<main>
+  <div class="container">
+    <div id="admin2" class="col s12 m12 l12">
+    </div>
+  </div>
+
+    <div id="admin3" class="col s12 m12 l12">
+    </div>
+
+    <div id="blog" class="col s12 m12 l12">
+
+      {{!-- Display used tags --}}
+      <div class="row">
+        <div class="col s12 m12 l12" id="tag-history">
+        {{#each blogTag}}
+          <div class="chip">{{this}}</div>
+        {{/each}}
+        </div>
+      </div>
+      
+      {{!-- Blog post and preview section --}}
+      <div class="row">
+        <form class="col s12 m6 l6" method="POST" action="/admin/blog/post?_method=POST">
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input name="blogSubject" id="blog-subject" type="text" class="validate" required="required">
+              <label for="blog-subject">Subject</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea name="blogContent" id="blog-content" class="materialize-textarea"></textarea>
+              <label for="blog-content">Tell all the truth but tell it slant</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="chips col s12" >
+            </div>
+          </div>
+          <input name="blogTags" id="blog-tags" type="hidden" value="[]">
+          <div class="row">
+            <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="publish">Publish</button>
+            <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="draft">Save Draft</button>
+          </div>
+        </form> 
+        
+        <div id="blog-post-preview" class="col s12 m6 l6 browser-default"></div>
+      </div>
+
+      {{!-- Accordion divs of past blog posts with edit option --}}
+      <div class="row">
+        <ul class="collapsible" data-collapsible="expandable">
+          {{#each blogPost}}
+          <li>
+            <div class="collapsible-header">
+              {{postDate}}, {{postType}}, {{title}}
+            </div>
+            <div class="collapsible-body browser-default">
+              <div class="row">
+                {{{body}}}
+              </div>
+              <div class="row">
+                {{#each tags}}
+                <div class="chip">{{this}}</div>
+                {{/each}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+    </div>
+    <div id="admin4" class="col s12 m12 l12">
+
+    </div>
+    
+  </div>
+</div>
+</main>
+
+<script src="/js/asciiMorph.min.js"></script>
+<script src="/js/showdown.min.js"></script>
+<script src="/js/init-admin.js"></script>

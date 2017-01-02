@@ -31,7 +31,7 @@ main {
      color: #000 !important;
 }
 /* label underline focus color */
-   .input-field textarea:focus {
+   .input-field textarea:focus, .chips {
      border-bottom: 1px solid #000 !important;
      box-shadow: 0 1px 0 0 #000 !important;
    }
@@ -55,4 +55,44 @@ main {
   .soon {
     font-size: calc(6px + (10 - 6) * (100vw - 400px) / (800 - 400));
   }
+}
+
+/* Defaults for lists to override materialize */
+/* Indenting */
+.browser-default ul, ol {
+  padding-left: 30px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+/* Unordered list styling */
+.browser-default ul li {
+  list-style-type: initial;
+}
+.browser-default ul li li {
+  list-style-type: circle;
+}
+.browser-default ul li li li {
+  list-style-type: square;
+}
+.browser-default ul li li li li {
+  list-style-type: disc;
+}
+.browser-default ul li li li li li {
+  list-style-type: circle;
+}
+/* Ordered list styling */
+.browser-default ol li {
+  list-style-type: decimal;
+}
+.browser-default ol li li {
+  list-style-type: upper-alpha;
+}
+.browser-default ol li li li {
+  list-style: lower-alpha;
+}
+.browser-default ol li li li li {
+  list-style: upper-roman;
+}
+.browser-default ol li li li li li {
+  list-style: lower-roman;
 }

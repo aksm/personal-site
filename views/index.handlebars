@@ -1,48 +1,51 @@
 <header>
-<div class="container center">
-<div class="row">
-  <pre class="black-text col s12 m12 l12" id="ascii"></pre>
-</div>
-<div class="row">
-  <a class="social" href="https://github.com/aksm">
-    <img class="hoverable" src="images/github.png">
-  </a>
-  <a class="social" href="https://www.linkedin.com/in/albertmin
-">
-    <img class="hoverable" src="images/linkedin.png">
-  </a>
-  <a class="social" href="http://stackexchange.com/users/8940997/albert-min">
-    <img class="hoverable" src="images/stackoverflow.png">
-  </a>
-</div>
-</div>
-<nav class="white z-depth-0">
-<div class="container">
-  <div class="row">
-
-    <div class="col s12">
-      <ul class="tabs">
-        <li class="tab col s3">
-          <a class="active black-text" id="profile-trigger" href="#about">About</a>
-        </li>
-        <li class="tab col s3">
-          <a class="black-text soon-trigger" href="#portfolio">Portfolio</a>
-        </li>
-        <li class="tab col s3">
-          <a class="black-text soon-trigger" href="#blog">Blog</a>
-        </li>
-        <li class="tab col s3">
-          <a class="black-text" href="#contact">Contact</a>
-        </li>
-      </ul>
+  <div class="container center">
+    <div class="row">
+      <pre class="black-text col s12 m12 l12" id="ascii"></pre>
     </div>
-
+    <div class="row">
+      <a class="social" href="https://github.com/aksm">
+        <img class="hoverable" src="images/github.png">
+      </a>
+      <a class="social" href="https://www.linkedin.com/in/albertmin
+    ">
+        <img class="hoverable" src="images/linkedin.png">
+      </a>
+      <a class="social" href="http://stackexchange.com/users/8940997/albert-min">
+        <img class="hoverable" src="images/stackoverflow.png">
+      </a>
+    </div>
   </div>
-</div>
-</nav>
+
+  <nav class="white z-depth-0">
+    <div class="container">
+      <div class="row">
+
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s3">
+              <a class="active black-text" id="profile-trigger" href="#about">About</a>
+            </li>
+            <li class="tab col s3">
+              <a class="black-text soon-trigger" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="tab col s3">
+              <a class="black-text soon-trigger" href="#blog">Blog</a>
+            </li>
+            <li class="tab col s3">
+              <a class="black-text" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </nav>
 
 </header>
+
 <br><br>
+
 <main>
   <div class="container">
     <div id="about" class="col s12 m12 l12">
@@ -183,9 +186,41 @@
 </div>
 </main>
 
+
+<div id="blog-admin" class="modal bottom-sheet">
+  <div class="modal-content">
+    <div class="row">
+    <form class="col s6 m4 l2 offset-s3 offset-m4 offset-l5" method="POST" action="/login?_method=POST">
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input name="uname" id="uname" type="text" class="validate" required="required">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input name="pword" id="pword" type="password" class="validate" required="required">
+        </div>
+      </div>
+      <div class="row">
+        <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="action"></button>
+      </div>
+
+    </form>
+    </div>
+
+  </div>
+
+</div>
+
+
 <footer class="page-footer white">
     <div class="container">
-      <div class="center">&copy; 2016 Albert Min</div>
+      <div id="copyright" class="center">&copy; 2016 Albert Min</div>
     </div>
     <br><br>
 </footer>
+
+<script src="/js/init.js"></script>
+<script src="/js/asciiMorph.min.js"></script>
