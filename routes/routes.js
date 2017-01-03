@@ -38,7 +38,6 @@ module.exports = function(app) {
 
   // Serve main page
   app.get("/", function(req, res) {
-    // res.render("index");
     BlogPost.find({postType: "publish"}).sort({postType: 1, postDate: -1})
       .then(function(posts) {
         BlogPost.distinct("tags").exec(function(err, tags) {
@@ -58,6 +57,28 @@ module.exports = function(app) {
         });
       });
   });
+
+  // Individual blog posts
+  app.get("/blog/page/:postid", function(req, res) {
+    var postid = mongoose.Types.ObjectId(req.params.postid);
+    BlogPost.findOne({postType: "publish", _id: postid})
+      .then(function(post) {
+        BlogPost.distinct("tags").exec(function(err, tags) {
+          if (err) {
+            console.log(err);
+            res.render("index");
+          } else {
+            var converter = new showdown.Converter();
+              post.body = converter.makeHtml(post.body);
+            res.render("blog", {
+              "blogTag": tags,
+              "blogPost": post
+            });
+          }
+        });
+      });
+
+  });  
 
   // Email contact info
   app.post("/contact", function(req, res) {

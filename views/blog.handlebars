@@ -1,0 +1,58 @@
+<header>
+  <div class="container center">
+    <div class="row">
+      <a href="/">
+        <pre class="black-text col s12 m12 l12" id="ascii"></pre>
+      </a>
+    </div>
+    <div class="row">
+      <a class="social" href="https://github.com/aksm">
+        <img class="hoverable" src="../../images/github.png">
+      </a>
+      <a class="social" href="https://www.linkedin.com/in/albertmin
+    ">
+        <img class="hoverable" src="../../images/linkedin.png">
+      </a>
+      <a class="social" href="http://stackexchange.com/users/8940997/albert-min">
+        <img class="hoverable" src="../../images/stackoverflow.png">
+      </a>
+    </div>
+  </div>
+</header>
+<br><br>
+
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <h5>{{blogPost.title}}</h5>
+              <h6>Posted: {{dateFormat blogPost.postDate "dddd, MMMM Do YYYY, h:mm:ss a"}} <a class="right hoverable" href="/blog/page/{{blogPost._id}}">Permalink</a></h6>
+              
+            </span>
+            <div class="row markdown-body browser-default">
+              {{{blogPost.body}}}
+            </div>
+          <div class="card-action markdown-body">
+            Tags: 
+              {{#each blogPost.tags}}
+              <div class="chip">{{this}}</div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="page-footer white">
+    <div class="container">
+      <div id="copyright" class="center">&copy; 2016 Albert Min</div>
+    </div>
+    <br><br>
+</footer>
+<script src="../../js/init.js"></script>
+<script src="../../js/asciiMorph.min.js"></script>
+
