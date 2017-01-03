@@ -3,7 +3,9 @@
     <div class="row">
       <pre class="black-text col s12 m12 l12" id="ascii"></pre>
     </div>
-
+    <div class="row center">
+      <a href="/logout" class="waves-effect waves-green btn-flat col s12 center" >GTFO</a>
+    </div>
   <nav class="white z-depth-0">
     <div class="container">
       <div class="row">
@@ -85,7 +87,7 @@
           </div>
         </form> 
         
-        <div id="blog-post-preview" class="col s12 m6 l6 browser-default"></div>
+        <div id="blog-post-preview" class="col s12 m6 l6 browser-default markdown-body"></div>
       </div>
 
       {{!-- Accordion divs of past blog posts with edit option --}}
@@ -96,7 +98,7 @@
             <div class="collapsible-header">
               {{postDate}}, {{postType}}, {{title}}
             </div>
-            <div class="collapsible-body browser-default">
+            <div class="collapsible-body browser-default markdown-body">
               <div class="row">
                 {{{body}}}
               </div>
@@ -109,8 +111,8 @@
                 <form class="col s12 m6 l6" method="POST" action="/admin/blog/edit?_method=POST">
                   <input name="postid" type="hidden" value="{{_id}}">
 
-                  <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="edit">Edit</button>
-                  <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="delete">Delete</button>
+                  <button class="waves-effect waves-green btn-flat col s12" type="submit" name="edit">Edit</button>
+                  <button class="waves-effect waves-green btn-flat col s12" type="submit" name="delete">Delete</button>
                 </form>
               </div>
             </div>

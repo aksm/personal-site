@@ -24,13 +24,13 @@
         <div class="col s12">
           <ul class="tabs">
             <li class="tab col s3">
-              <a class="active black-text" id="profile-trigger" href="#about">About</a>
+              <a class="black-text" id="profile-trigger" href="#about">About</a>
             </li>
             <li class="tab col s3">
               <a class="black-text soon-trigger" href="#portfolio">Portfolio</a>
             </li>
             <li class="tab col s3">
-              <a class="black-text soon-trigger" href="#blog">Blog</a>
+              <a class="active black-text soon-trigger" href="#blog">Blog</a>
             </li>
             <li class="tab col s3">
               <a class="black-text" href="#contact">Contact</a>
@@ -144,9 +144,38 @@
     </div>
 
     <div id="blog" class="col s12 m12 l12">
-      <div class="row center">
+{{!--       <div class="row center">
         <pre class="coming"></pre>
         <pre class="soon"></pre>
+      </div>
+ --}}      
+      <div class="container">
+      <div class="row">
+        <ul class="collapsible popout" data-collapsible="expandable">
+          {{#each blogPost}}
+          <li>
+            <div class="collapsible-header {{#firstThree @index}}
+              active
+              {{/firstThree}}">
+            <h5>{{title}}</h5>
+            <h6>Posted: {{dateFormat postDate "dddd, MMMM Do YYYY, h:mm:ss a"}}</h6>
+            </div>
+            <div class="collapsible-body">
+              <div class="row browser-default markdown-body">
+                {{{body}}}
+              </div>
+              <div class="row markdown-body">
+              Tags: 
+                {{#each tags}}
+                <div class="chip">{{this}}</div>
+                {{/each}}
+              </div>
+
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
       </div>
 
     </div>

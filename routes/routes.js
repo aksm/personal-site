@@ -11,7 +11,18 @@ module.exports = function(app) {
   showdown.setFlavor("github");
   // Set handlebars
   app.set("views");
-  app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+  app.engine("handlebars", exphbs({
+    helpers: {
+      dateFormat: require("handlebars-dateformat"),
+      firstThree: function(index, options) {
+        if(index < 3){
+          return options.fn(this);
+        } else {
+          return options.inverse(this);
+        }        
+      }
+    },
+    defaultLayout: "main" }));
   app.set("view engine", "handlebars");
 
   app.use(methodOverride('_method'));
@@ -27,7 +38,25 @@ module.exports = function(app) {
 
   // Serve main page
   app.get("/", function(req, res) {
-    res.render("index");
+    // res.render("index");
+    BlogPost.find({postType: "publish"}).sort({postType: 1, postDate: -1})
+      .then(function(posts) {
+        BlogPost.distinct("tags").exec(function(err, tags) {
+          if (err) {
+            console.log(err);
+            res.render("index");
+          } else {
+            var converter = new showdown.Converter();
+            for(var i = 0; i < posts.length; i++) {
+              posts[i].body = converter.makeHtml(posts[i].body);
+            }
+            res.render("index", {
+              "blogTag": tags,
+              "blogPost": posts
+            });
+          }
+        });
+      });
   });
 
   // Email contact info
@@ -74,7 +103,7 @@ module.exports = function(app) {
   });
 
   // Logout route
-  app.get('/logout', function (req, res) {
+  app.get("/logout", function (req, res) {
     req.session.destroy();
     res.redirect("/");
   });

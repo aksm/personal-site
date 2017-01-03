@@ -59,16 +59,19 @@ main {
 
 /* Defaults for lists to override materialize */
 /* Indenting */
-.browser-default ul, ol {
+/*.browser-default ul, ol {
   padding-left: 30px;
   margin-top: 10px;
   margin-bottom: 15px;
-}
+}*/
 /* Unordered list styling */
 .browser-default ul li {
   list-style-type: initial;
 }
 .browser-default ul li li {
+  list-style-type: circle;
+}
+.browser-default ol li ul li li {
   list-style-type: circle;
 }
 .browser-default ul li li li {
@@ -95,4 +98,8 @@ main {
 }
 .browser-default ol li li li li li {
   list-style: lower-roman;
+}
+.collapsible-header {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
