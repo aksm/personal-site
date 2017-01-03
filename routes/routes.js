@@ -4,9 +4,11 @@ var smtpTrans = require("nodemailer-smtp-transport");
 var methodOverride = require("method-override");
 var bodyParser = require("body-parser");
 var showdown = require("showdown");
+var mongoose = require("mongoose");
 
 module.exports = function(app) {
 
+  showdown.setFlavor("github");
   // Set handlebars
   app.set("views");
   app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -83,17 +85,31 @@ module.exports = function(app) {
   });
 
   app.get("/admin/main", function(req, res) {
+    var editID = req.session.edit === undefined ? false : req.session.edit;
     BlogPost.find({}).sort({postType: 1, postDate: -1})
       .then(function(posts) {
-
         BlogPost.distinct("tags").exec(function(err, tags) {
           if (err) {
             console.log(err);
             res.render("admin");
           } else {
+            var converter = new showdown.Converter();
+            var editPost = "";
+            for(var i = 0; i < posts.length; i++) {
+              if(editID == posts[i]._id) {
+                editPost = posts[i];
+                editPost.tags = JSON.stringify(editPost.tags);
+                posts.splice(i, 1);
+              } else {
+                posts[i].body = converter.makeHtml(posts[i].body);
+              }
+            }
+            editID = false;
+            req.session.edit = undefined;
             res.render("admin", {
               "blogTag": tags,
-              "blogPost": posts
+              "blogPost": posts,
+              "editPost": editPost
             });
           }
         });
@@ -101,22 +117,43 @@ module.exports = function(app) {
   });
 
   app.post("/admin/blog/post", function(req, res) {
+    var query = "";
+    if(req.body.editID) {
+      var queryID = mongoose.Types.ObjectId(req.body.editID);
+      query = {_id: queryID};
+    } else {
+      query = {_id: mongoose.Types.ObjectId()};      
+    }
     var blogPostType = req.body.publish === "" ? "publish" : "draft";
     var tagArray = JSON.parse(req.body.blogTags);
-    showdown.setFlavor("github");
-    var converter = new showdown.Converter();
-    var html = converter.makeHtml(req.body.blogContent);
-    var blogPost = new BlogPost({
+    var blogPost = {
       title: req.body.blogSubject,
-      body: html,
+      body: req.body.blogContent,
       postType: blogPostType,
       tags: tagArray
-    });
-    blogPost.save(function(err, doc) {
+    };
+    BlogPost.findOneAndUpdate(query, blogPost, {upsert: true}, function(err, doc) {
       if(err) res.send(err);
       else {
         res.redirect("/admin/main");
       }
+
     });
   });
+  app.post("/admin/blog/edit", function(req, res) {
+    if(req.body.edit === "") {
+      req.session.edit = req.body.postid;
+      res.redirect("/admin/main");
+
+    } else if(req.body.delete === "") {
+      var postID = mongoose.Types.ObjectId(req.body.postid);
+      BlogPost.remove({_id: postID}, function(err, data) {
+        if(err) {
+          console.log(err);
+          res.redirect("/admin/main");
+        } else res.redirect("/admin/main");
+
+      });
+    }
+  });  
 };

@@ -59,23 +59,26 @@
 
           <div class="row">
             <div class="input-field col s12">
-              <input name="blogSubject" id="blog-subject" type="text" class="validate" required="required">
+              <input name="blogSubject" id="blog-subject" type="text" class="validate" required="required" {{#if editPost}}value={{editPost.title}}{{/if}}>
               <label for="blog-subject">Subject</label>
             </div>
           </div>
 
           <div class="row">
             <div class="input-field col s12">
-              <textarea name="blogContent" id="blog-content" class="materialize-textarea"></textarea>
+              <textarea name="blogContent" id="blog-content" class="materialize-textarea">{{#if editPost}}{{editPost.body}}{{/if}}</textarea>
               <label for="blog-content">Tell all the truth but tell it slant</label>
             </div>
           </div>
 
           <div class="row">
-            <div class="chips col s12" >
+            <div class="chips col s12" id="post-chips" {{#if editPost.tags}}data-tags={{editPost.tags}}{{/if}}>
             </div>
           </div>
-          <input name="blogTags" id="blog-tags" type="hidden" value="[]">
+          {{#if editPost}}
+          <input name="editID" id="blog-id" type="hidden" value={{editPost._id}}>
+          {{/if}}
+          <input name="blogTags" id="blog-tags" type="hidden" value={{#if editPost.tags}}{{editPost.tags}}{{else}}"[]"{{/if}}>
           <div class="row">
             <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="publish">Publish</button>
             <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="draft">Save Draft</button>
@@ -101,6 +104,14 @@
                 {{#each tags}}
                 <div class="chip">{{this}}</div>
                 {{/each}}
+              </div>
+              <div class="row">
+                <form class="col s12 m6 l6" method="POST" action="/admin/blog/edit?_method=POST">
+                  <input name="postid" type="hidden" value="{{_id}}">
+
+                  <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="edit">Edit</button>
+                  <button class="waves-effect waves-green btn-flat col s12 center" type="submit" name="delete">Delete</button>
+                </form>
               </div>
             </div>
           </li>

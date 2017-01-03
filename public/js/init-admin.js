@@ -23,11 +23,18 @@
       $("#blog-post-preview").html(html);
 
     });
-    
+    var editTags = $("#post-chips").data("tags") === undefined ? false : $("#post-chips").data("tags");
+    var postChips = [];
+    if(editTags) {
+      for(var i = 0; i < editTags.length; i++) {
+        postChips.push({tag: editTags[i]});
+      }
+    }
     // Chip functions
     $(".chips").material_chip({
       placeholder: "tag+",
-      secondaryPlaceholder: "tag+"
+      secondaryPlaceholder: "tag+",
+      data: postChips
     });
     $(".chips").on("chip.add", function(e, chip) {
       var tags = $("#blog-tags");
