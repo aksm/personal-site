@@ -14,8 +14,8 @@ module.exports = function(app) {
   app.set("views");
   var hbs = exphbs.create({
     helpers: {
-      firstThree: function(index, options) {
-        if(index < 3){
+      activePost: function(index, options) {
+        if(index < 1){
           return options.fn(this);
         } else {
           return options.inverse(this);

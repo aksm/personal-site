@@ -154,11 +154,10 @@
         <ul class="collapsible popout" data-collapsible="expandable">
           {{#each blogPost}}
           <li>
-            <div class="collapsible-header {{#firstThree @index}}
+            <div class="collapsible-header {{#activePost @index}}
               active
-              {{/firstThree}}">
+              {{/activePost}}">
             <h5>{{title}}</h5>
-{{!--             <h6>Posted: {{dateFormat postDate "dddd, MMMM Do YYYY, h:mm:ss a"}} <a class="right hoverable" href="/blog/page/{{_id}}">Permalink</a></h6> --}}
             <h6>Posted: {{formatRelative postDate}} <a class="right hoverable" href="/blog/page/{{_id}}">Permalink</a></h6>
             
             </div>
