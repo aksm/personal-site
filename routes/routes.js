@@ -5,15 +5,15 @@ var methodOverride = require("method-override");
 var bodyParser = require("body-parser");
 var showdown = require("showdown");
 var mongoose = require("mongoose");
+var HandlebarsIntl = require("handlebars-intl");
 
 module.exports = function(app) {
 
   showdown.setFlavor("github");
   // Set handlebars
   app.set("views");
-  app.engine("handlebars", exphbs({
+  var hbs = exphbs.create({
     helpers: {
-      dateFormat: require("handlebars-dateformat"),
       firstThree: function(index, options) {
         if(index < 3){
           return options.fn(this);
@@ -22,7 +22,11 @@ module.exports = function(app) {
         }        
       }
     },
-    defaultLayout: "main" }));
+    defaultLayout: "main"
+  });
+
+  HandlebarsIntl.registerWith(hbs.handlebars);
+  app.engine("handlebars", hbs.engine);
   app.set("view engine", "handlebars");
 
   app.use(methodOverride('_method'));
@@ -182,7 +186,7 @@ module.exports = function(app) {
       postType: blogPostType,
       tags: tagArray
     };
-    BlogPost.findOneAndUpdate(query, blogPost, {upsert: true}, function(err, doc) {
+    BlogPost.findOneAndUpdate(query, blogPost, {upsert: true, setDefaultsOnInsert: true}, function(err, doc) {
       if(err) res.send(err);
       else {
         res.redirect("/admin/main");

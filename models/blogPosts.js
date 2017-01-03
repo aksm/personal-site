@@ -4,17 +4,21 @@ var Schema = mongoose.Schema;
 
 var blogPostSchema = new Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   },
   body: {
-    type: String
+    type: String,
+    required: true
   },
   postDate: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    required: true
   },
   postType: {
-    type: String
+    type: String,
+    required: true
   },
   tags: [{
     type: String,

@@ -23,7 +23,7 @@
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.14.2",
-    "handlebars-dateformat": "^1.0.1",
+    "handlebars-intl": "^1.1.2",
     "mongoose": "^4.7.5",
     "nodemailer": "^2.7.0",
     "path": "^0.12.7",
