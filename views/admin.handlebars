@@ -97,7 +97,8 @@
           {{#each blogPost}}
           <li>
             <div class="collapsible-header">
-              {{postDate}}, {{postType}}, {{title}}
+            <h5>{{title}}</h5>
+            <h6>Posted: {{formatRelative postDate}} <span class="right">{{postType}}</span></h6>
             </div>
             <div class="collapsible-body browser-default markdown-body">
               <div class="row">
