@@ -42,7 +42,7 @@ module.exports = function(app) {
 
   // Serve main page
   app.get("/", function(req, res) {
-    BlogPost.find({postType: "publish"}).sort({postType: 1, postDate: -1})
+    BlogPost.find({postType: "posted"}).sort({postType: 1, postDate: -1})
       .then(function(posts) {
         BlogPost.distinct("tags").exec(function(err, tags) {
           if (err) {
@@ -65,7 +65,7 @@ module.exports = function(app) {
   // Individual blog posts
   app.get("/blog/page/:postid", function(req, res) {
     var postid = mongoose.Types.ObjectId(req.params.postid);
-    BlogPost.findOne({postType: "publish", _id: postid})
+    BlogPost.findOne({postType: "posted", _id: postid})
       .then(function(post) {
         BlogPost.distinct("tags").exec(function(err, tags) {
           if (err) {
@@ -178,7 +178,7 @@ module.exports = function(app) {
     } else {
       query = {_id: mongoose.Types.ObjectId()};      
     }
-    var blogPostType = req.body.publish === "" ? "publish" : "draft";
+    var blogPostType = req.body.publish === "" ? "posted" : "draft";
     var tagArray = JSON.parse(req.body.blogTags);
     var blogPost = {
       title: req.body.blogSubject,
