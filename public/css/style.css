@@ -68,29 +68,33 @@ main {
 .browser-default ul li {
   list-style-type: initial;
 }
-.browser-default ul li li {
+.browser-default ul li li,
+.browser-default ol li ul li li,
+.browser-default ol li li ul li li {
   list-style-type: circle;
 }
-.browser-default ol li ul li li {
-  list-style-type: circle;
-}
-.browser-default ul li li li {
+.browser-default ul li li li,
+.browser-default ol li ul li li li {
   list-style-type: square;
 }
-.browser-default ul li li li li {
+.browser-default ul li li li li,
+.browser-default ol li ul li {
   list-style-type: disc;
 }
 .browser-default ul li li li li li {
   list-style-type: circle;
 }
 /* Ordered list styling */
-.browser-default ol li {
+.browser-default ol li,
+.browser-default ul li ol li {
   list-style-type: decimal;
 }
-.browser-default ol li li {
+.browser-default ol li li,
+.browser-default ul li ol li li {
   list-style-type: upper-alpha;
 }
-.browser-default ol li li li {
+.browser-default ol li li li,
+.browser-default ul li ol li li li {
   list-style: lower-alpha;
 }
 .browser-default ol li li li li {
@@ -99,7 +103,12 @@ main {
 .browser-default ol li li li li li {
   list-style: lower-roman;
 }
+
+
 .collapsible-header {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
+}
+pre {
+  overflow-y: hidden;
 }
