@@ -3,7 +3,7 @@
 
     var ascii = document.querySelector("#ascii");
     var asciiHeader = new AsciiMorph();
-    asciiHeader.morph(ascii, {x: 0, y: 20});
+    asciiHeader.morph(ascii, {x: 0, y: 5});
     var backstage = [
 
       "╔╗ ┌─┐┌─┐┬┌─┌─┐┌┬┐┌─┐┌─┐┌─┐",
