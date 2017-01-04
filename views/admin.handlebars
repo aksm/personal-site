@@ -60,6 +60,9 @@
         <form class="col s12 m6 l6" method="POST" action="/admin/blog/post?_method=POST">
 
           <div class="row">
+            {{#if editPost}}
+              <h3><span class="new badge left grey" data-badge-caption="">post type: {{editPost.postType}}</span></h3>
+            {{/if}}
             <div class="input-field col s12">
               <input name="blogSubject" id="blog-subject" type="text" class="validate" required="required" {{#if editPost}}value={{editPost.title}}{{/if}}>
               <label for="blog-subject">Subject</label>
@@ -98,7 +101,7 @@
           <li>
             <div class="collapsible-header">
             <h5>{{title}}</h5>
-            <h6>Posted: {{formatRelative postDate}} <span class="right">{{postType}}</span></h6>
+            <h6>Updated: {{formatRelative postDate}} | Created: {{formatRelative createDate}}<span class="right">{{postType}}</span></h6>
             </div>
             <div class="collapsible-body browser-default markdown-body">
               <div class="row">

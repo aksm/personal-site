@@ -138,6 +138,7 @@ module.exports = function(app) {
     next();
   });
 
+  // Route to serve primary admin page
   app.get("/admin/main", function(req, res) {
     var editID = req.session.edit === undefined ? false : req.session.edit;
     BlogPost.find({}).sort({postType: 1, postDate: -1})
@@ -150,6 +151,9 @@ module.exports = function(app) {
             var converter = new showdown.Converter();
             var editPost = "";
             for(var i = 0; i < posts.length; i++) {
+              // posts[i].created = posts[i]._id.getTimestamp();
+              posts[i].created = "blah";
+              // console.log(posts[i].created);
               if(editID == posts[i]._id) {
                 editPost = posts[i];
                 editPost.tags = JSON.stringify(editPost.tags);
@@ -170,19 +174,25 @@ module.exports = function(app) {
       });
   });
 
+  // Route for creating new blog posts
   app.post("/admin/blog/post", function(req, res) {
     var query = "";
+    var createDate = "";
     if(req.body.editID) {
       var queryID = mongoose.Types.ObjectId(req.body.editID);
+      createDate = queryID.getTimestamp();
       query = {_id: queryID};
     } else {
-      query = {_id: mongoose.Types.ObjectId()};      
+      query = {_id: mongoose.Types.ObjectId()};
+      createDate = query._id.getTimestamp();
     }
     var blogPostType = req.body.publish === "" ? "posted" : "draft";
     var tagArray = JSON.parse(req.body.blogTags);
     var blogPost = {
       title: req.body.blogSubject,
       body: req.body.blogContent,
+      postDate: new Date(),
+      createDate: createDate,
       postType: blogPostType,
       tags: tagArray
     };
@@ -194,6 +204,8 @@ module.exports = function(app) {
 
     });
   });
+
+  // Route to serve post to editing form or to delete post.
   app.post("/admin/blog/edit", function(req, res) {
     if(req.body.edit === "") {
       req.session.edit = req.body.postid;

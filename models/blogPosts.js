@@ -16,6 +16,10 @@ var blogPostSchema = new Schema({
     default: Date.now,
     required: true
   },
+  createDate: {
+    type: Date,
+    required: true
+  },
   postType: {
     type: String,
     required: true

@@ -15,8 +15,10 @@
     asciiHeader.morph.morph(backstage);
 
     showdown.setFlavor("github");
-    showdown.setOption("smoothLivePreview", "true");
-    var converter = new showdown.Converter();
+    var converter = new showdown.Converter({
+      smoothLivePreview: true,
+      smarthIndentationFix: true
+    });
     $("#blog-content").keyup(function(){
       var txt = $("#blog-content").val();
       var html = converter.makeHtml(txt);
