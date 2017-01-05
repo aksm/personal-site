@@ -133,6 +133,10 @@
       window.setTimeout(switchPic, 3200);
     });
 
+    $("pre code").each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+
     $("#copyright").dblclick(function() {
       $("#blog-admin").modal("open");
     });

@@ -51,6 +51,8 @@
       tagArray.splice(tagIndex, 1);
       tags.val(JSON.stringify(tagArray));
     });
-
+    $("pre code").each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
   }); // end of document ready
 })(jQuery); // end of jQuery name space
