@@ -64,7 +64,7 @@
               <h3><span class="new badge left grey" data-badge-caption="">post type: {{editPost.postType}}</span></h3>
             {{/if}}
             <div class="input-field col s12">
-              <input name="blogSubject" id="blog-subject" type="text" class="validate" required="required" {{#if editPost}}value={{editPost.title}}{{/if}}>
+              <input name="blogSubject" id="blog-subject" type="text" class="validate" required="required" {{#if editPost}}value="{{editPost.title}}"{{/if}}>
               <label for="blog-subject">Subject</label>
             </div>
           </div>

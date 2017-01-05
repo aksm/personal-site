@@ -113,7 +113,7 @@ module.exports = function(app) {
   var auth = function(req, res, next) {
     if(req.session && req.session.user === process.env.ADMIN && req.session.admin) {
       return next();
-    } else return res.sendStatus(401);
+    } else return res.redirect("/");
   };
 
   // Login route
@@ -151,9 +151,7 @@ module.exports = function(app) {
             var converter = new showdown.Converter();
             var editPost = "";
             for(var i = 0; i < posts.length; i++) {
-              // posts[i].created = posts[i]._id.getTimestamp();
               posts[i].created = "blah";
-              // console.log(posts[i].created);
               if(editID == posts[i]._id) {
                 editPost = posts[i];
                 editPost.tags = JSON.stringify(editPost.tags);
