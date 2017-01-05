@@ -19,11 +19,25 @@
       smoothLivePreview: true,
       smarthIndentationFix: true
     });
-    $("#blog-content").keyup(function(){
-      var txt = $("#blog-content").val();
-      var html = converter.makeHtml(txt);
-      $("#blog-post-preview").html(html);
 
+    var markdownToHtml = function(content, display) {
+      var txt = content.val();
+      var html = converter.makeHtml(txt);
+      display.html(html);
+    };
+    var highlight = function() {
+      $("pre code").each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    };
+
+    var blogContent = $("#blog-content");
+    var blogPreview = $("#blog-post-preview");
+    markdownToHtml(blogContent, blogPreview);
+    highlight();
+    $("#blog-content").on("keyup", {content: blogContent, preview: blogPreview},function(e) {
+      markdownToHtml(e.data.content, e.data.preview);
+      highlight();
     });
     var editTags = $("#post-chips").data("tags") === undefined ? false : $("#post-chips").data("tags");
     var postChips = [];
@@ -50,9 +64,6 @@
       var tagIndex = tagArray.indexOf(chip.tag);
       tagArray.splice(tagIndex, 1);
       tags.val(JSON.stringify(tagArray));
-    });
-    $("pre code").each(function(i, block) {
-      hljs.highlightBlock(block);
     });
   }); // end of document ready
 })(jQuery); // end of jQuery name space
