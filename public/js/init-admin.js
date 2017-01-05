@@ -35,9 +35,18 @@
     var blogPreview = $("#blog-post-preview");
     markdownToHtml(blogContent, blogPreview);
     highlight();
+    var delay = (function(){
+      var timer = 0;
+      return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+      };
+    })();
     $("#blog-content").on("keyup", {content: blogContent, preview: blogPreview},function(e) {
-      markdownToHtml(e.data.content, e.data.preview);
-      highlight();
+      delay(function(){
+        markdownToHtml(e.data.content, e.data.preview);
+        highlight();
+      }, 100 );
     });
     var editTags = $("#post-chips").data("tags") === undefined ? false : $("#post-chips").data("tags");
     var postChips = [];
