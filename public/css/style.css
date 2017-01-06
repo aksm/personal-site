@@ -112,3 +112,7 @@ main {
 pre {
   overflow-y: hidden;
 }
+
+.collapsible-body p {
+  padding: 0 !important;
+}
