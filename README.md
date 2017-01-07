@@ -1,4 +1,4 @@
-# personal-site
+# http://www.albertmin.com
 ![alt text](readme/democliplists.gif "Adding Markdown lists")
 * *Live-previewing lists created in Markdown.*
 
