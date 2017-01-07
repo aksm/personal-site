@@ -1,21 +1,21 @@
 # personal-site
 ![alt text](readme/democliplists.gif "Adding Markdown lists")
-*Live-previewing lists created in Markdown.*
+* *Live-previewing lists created in Markdown.*
 
 ---
 
 ![alt text](readme/democlipimg.gif "Adding Markdown image")
-*Adding an image of a cute puppy.*
+* *Adding an image of a cute puppy.*
 
 ---
 
 ![alt text](reamde/democlipsave.gif "Saving blog post")
-*Saving the image of the cute puppy.*
+* *Saving the image of the cute puppy.*
 
 ---
 
 ![alt text](readme/democlipdisplay.gif "Displaying blog post")
-*Getting the saved puppy post from mongo and displaying.*
+* *Getting the saved puppy post from mongo and displaying.*
 
 ---
 
