@@ -154,7 +154,8 @@ module.exports = function(app) {
               posts[i].created = "blah";
               if(editID == posts[i]._id) {
                 editPost = posts[i];
-                editPost.tags = JSON.stringify(editPost.tags);
+
+                // editPost.tags = JSON.stringify(editPost.tags);
                 posts.splice(i, 1);
               } else {
                 posts[i].body = converter.makeHtml(posts[i].body);
