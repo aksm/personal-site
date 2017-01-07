@@ -9,7 +9,7 @@
 
 ---
 
-![alt text](reamdme/democlipsave.gif "Saving blog post")
+![alt text](readme/democlipsave.gif "Saving blog post")
 * *Saving the image of the cute puppy.*
 
 ---
