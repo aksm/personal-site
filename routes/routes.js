@@ -156,6 +156,7 @@ module.exports = function(app) {
                 editPost = posts[i];
 
                 // editPost.tags = JSON.stringify(editPost.tags);
+                console.log(editPost.tags);
                 posts.splice(i, 1);
               } else {
                 posts[i].body = converter.makeHtml(posts[i].body);
@@ -186,15 +187,14 @@ module.exports = function(app) {
       createDate = query._id.getTimestamp();
     }
     var blogPostType = req.body.publish === "" ? "posted" : "draft";
-    console.log(req.body.blogTags);
-    // var tagArray = JSON.parse(req.body.blogTags);
+    var tagArray = JSON.parse(req.body.blogTags);
     var blogPost = {
       title: req.body.blogSubject,
       body: req.body.blogContent,
       postDate: new Date(),
       createDate: createDate,
       postType: blogPostType,
-      tags: req.body.blogTags
+      tags: tagArray
     };
     BlogPost.findOneAndUpdate(query, blogPost, {upsert: true, setDefaultsOnInsert: true}, function(err, doc) {
       if(err) res.send(err);

@@ -51,7 +51,6 @@
     var editTags = $("#post-chips").data("tags") === undefined ? false : $("#post-chips").data("tags");
     var postChips = [];
     if(editTags) {
-      editTags = editTags.split(",");
       for(var i = 0; i < editTags.length; i++) {
         postChips.push({tag: editTags[i]});
       }
