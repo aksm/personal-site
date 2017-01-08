@@ -83,7 +83,7 @@
           {{#if editPost}}
           <input name="editID" id="blog-id" type="hidden" value={{editPost._id}}>
           {{/if}}
-          <input name="blogTags" id="blog-tags" type="hidden" value={{#if editPost.tags}}{{editPost.tags}}{{else}}"[]"{{/if}}>
+          <input name="blogTags" id="blog-tags" type="hidden" value={{#if editPost.tags}}"{{editPost.tags}}"{{else}}"[]"{{/if}}>
           <div class="row">
             <button class="waves-effect waves-grey btn-flat col s12 center" type="submit" name="publish">Publish</button>
             <button class="waves-effect waves-grey btn-flat col s12 center" type="submit" name="draft">Save Draft</button>

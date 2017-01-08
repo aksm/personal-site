@@ -154,6 +154,7 @@ module.exports = function(app) {
               posts[i].created = "blah";
               if(editID == posts[i]._id) {
                 editPost = posts[i];
+                editPost.tags = JSON.stringify(editPost.tags);
                 posts.splice(i, 1);
               } else {
                 posts[i].body = converter.makeHtml(posts[i].body);
@@ -184,7 +185,7 @@ module.exports = function(app) {
       createDate = query._id.getTimestamp();
     }
     var blogPostType = req.body.publish === "" ? "posted" : "draft";
-    var tagArray = JSON.parse(req.body.blogTags);
+    // var tagArray = JSON.parse(req.body.blogTags);
     var blogPost = {
       title: req.body.blogSubject,
       body: req.body.blogContent,
