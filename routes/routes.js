@@ -194,7 +194,7 @@ module.exports = function(app) {
       postDate: new Date(),
       createDate: createDate,
       postType: blogPostType,
-      tags: tagArray
+      tags: req.body.blogTags
     };
     BlogPost.findOneAndUpdate(query, blogPost, {upsert: true, setDefaultsOnInsert: true}, function(err, doc) {
       if(err) res.send(err);
