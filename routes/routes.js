@@ -185,7 +185,7 @@ module.exports = function(app) {
       createDate = query._id.getTimestamp();
     }
     var blogPostType = req.body.publish === "" ? "posted" : "draft";
-    // var tagArray = JSON.parse(req.body.blogTags);
+    var tagArray = JSON.parse(req.body.blogTags);
     var blogPost = {
       title: req.body.blogSubject,
       body: req.body.blogContent,
