@@ -373,7 +373,7 @@
 .markdown-body table,
 .markdown-body pre {
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: 16px !important;
 }
 
 .markdown-body hr {
@@ -419,7 +419,7 @@
 .markdown-body h5,
 .markdown-body h6 {
   margin-top: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 16px !important;
   font-weight: 600;
   line-height: 1.25;
 }
@@ -496,7 +496,7 @@
 }
 
 .markdown-body li>p {
-  margin-top: 16px;
+  margin-top: 16px !important;
 }
 
 .markdown-body li+li {
@@ -509,15 +509,15 @@
 
 .markdown-body dl dt {
   padding: 0;
-  margin-top: 16px;
+  margin-top: 16px !important;
   font-size: 1em;
   font-style: italic;
   font-weight: bold;
 }
 
 .markdown-body dl dd {
-  padding: 0 16px;
-  margin-bottom: 16px;
+  padding: 0 16px !important;
+  margin-bottom: 16px !important;
 }
 
 .markdown-body table {
@@ -582,7 +582,7 @@
 }
 
 .markdown-body .highlight {
-  margin-bottom: 16px;
+  margin-bottom: 16px !important;
 }
 
 .markdown-body .highlight pre {
@@ -592,7 +592,7 @@
 
 .markdown-body .highlight pre,
 .markdown-body pre {
-  padding: 16px;
+  padding: 16px !important;
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
