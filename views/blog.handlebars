@@ -32,10 +32,10 @@
               <h6>Updated: {{formatRelative blogPost.postDate}} | Created: {{formatRelative blogPost.createDate}} <a class="right hoverable" href="/blog/page/{{blogPost._id}}">Permalink</a></h6>
               
             </span>
-            <div class="row markdown-body browser-default">
+            <div class="row markdown-body browser-default blog-permalink">
               {{{blogPost.body}}}
             </div>
-          <div class="card-action markdown-body">
+          <div class="card-action markdown-body blog-permalink">
             Tags: 
               {{#each blogPost.tags}}
               <div class="chip">{{this}}</div>

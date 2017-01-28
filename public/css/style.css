@@ -104,7 +104,6 @@ main {
   list-style: lower-roman;
 }
 
-
 .collapsible-header {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
@@ -115,4 +114,13 @@ pre {
 
 .collapsible-body p {
   padding: 0 !important;
+}
+
+@media only screen 
+and (max-width : 768px){
+  .blog-permalink {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
 }
