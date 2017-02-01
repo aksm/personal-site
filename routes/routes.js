@@ -68,6 +68,7 @@ module.exports = function(app) {
   app.get("/blog/page/:postid", function(req, res) {
     var postid = mongoose.Types.ObjectId(req.params.postid);
     BlogPost.findOne({postType: "posted", _id: postid})
+      .populate("comments")
       .then(function(post) {
         BlogPost.distinct("tags").exec(function(err, tags) {
           if (err) {

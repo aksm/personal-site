@@ -158,74 +158,73 @@
       </div>
  --}}      
       <div class="container">
-      <div class="row">
-        <ul class="collapsible popout" data-collapsible="expandable">
-          {{#each blogPost}}
-          <li class="card">
-            <div class="collapsible-header {{#activePost @index}}
-              active
-              {{/activePost}}">
-            <h5>{{title}}</h5>
-            <h6>Updated: {{formatRelative postDate}} | Created: {{formatRelative createDate}} <a class="right hoverable" href="/blog/page/{{_id}}">Permalink</a></h6>
-            
-            </div>
-            <div class="collapsible-body">
-              <div class="row browser-default markdown-body">
-                {{{body}}}
+        <div class="row">
+          <ul class="collapsible popout" data-collapsible="expandable">
+            {{#each blogPost}}
+            <li class="card">
+              <div class="collapsible-header {{#activePost @index}}
+                active
+                {{/activePost}}">
+              <h5>{{title}}</h5>
+              <div class="badge">Updated {{formatRelative postDate}} | Posted {{formatRelative createDate}} <a class="hoverable right" href="/blog/page/{{_id}}">Permalink</a></div>
               </div>
-              <div class="row markdown-body">
-              Tags: 
-                {{#each tags}}
-                <div class="chip">{{this}}</div>
-                {{/each}}
-              </div>
-              <div class="row markdown-body">
-                <a class="btn-floating btn-small waves-effect grey lighten-3 waves-white right comment-button" data-id="{{_id}}"><i class="material-icons grey-text">comment</i></a>
-              </div>
-              {{#if comments.length}}
-              <div class="card-action comment-panel-{{_id}}" hidden>
-                <ul class="collection">
-                {{#each comments}}
-                  <li class="collection-item avatar comment">
-                    <i class="material-icons circle">record_voice_over</i>
-                    <span class="commenter">{{commenterName}}</span>
-                    <span class="right">Posted: {{formatRelative postDate}}</span>
-                    <br>
-                    <br>
-                    <p>{{comment}}</p>
-                  </li>
-                {{/each}}
-                </ul>
-              </div>
-              {{/if}}
-              <div class="card-action comment-panel-{{_id}}" id="comment-form" hidden>
-                <form class="comment-form" method="POST" action="blog/comment/post?_method=POST">
-                  <input name="comment_id" id="comment-id" type="hidden" value="{{_id}}">
-                  <div class="row">
-                    <div class="col s12 comment-field">
-                      <textarea name="comment_text" id="comment-message" class="materialize-textarea comment-field" placeholder="Tell all the truth but tell it slant..."></textarea>
+              <div class="collapsible-body">
+                <div class="row browser-default markdown-body">
+                  {{{body}}}
+                </div>
+                <div class="row markdown-body">
+                Tags: 
+                  {{#each tags}}
+                  <div class="chip">{{this}}</div>
+                  {{/each}}
+                </div>
+                <div class="row markdown-body">
+                  <a class="btn-floating btn-small waves-effect grey lighten-3 waves-white right comment-button" data-id="{{_id}}"><i class="material-icons grey-text">comment</i></a>
+                </div>
+                {{#if comments.length}}
+                <div class="card-action comment-panel-{{_id}}" hidden>
+                  <ul class="collection">
+                  {{#each comments}}
+                    <li class="collection-item avatar comment">
+                      <i class="material-icons circle">record_voice_over</i>
+                      <span class="commenter">{{commenterName}}</span>
+                      <span class="right">Commented {{formatRelative postDate}}</span>
+                      <br>
+                      <br>
+                      <p>{{comment}}</p>
+                    </li>
+                  {{/each}}
+                  </ul>
+                </div>
+                {{/if}}
+                <div class="card-action comment-panel-{{_id}}" id="comment-form" hidden>
+                  <form class="comment-form" method="POST" action="blog/comment/post?_method=POST">
+                    <input name="comment_id" id="comment-id" type="hidden" value="{{_id}}">
+                    <div class="row">
+                      <div class="col s12 comment-field">
+                        <textarea name="comment_text" id="comment-message" class="materialize-textarea comment-field" placeholder="Tell all the truth but tell it slant..."></textarea>
+                      </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col s12 m5 l4 comment-field">
-                      <input name="name" id="comment-name" type="text" class="validate comment-field" placeholder="Name (Required.)" required="required">
+                    <div class="row">
+                      <div class="col s12 m5 l4 comment-field">
+                        <input name="name" id="comment-name" type="text" class="validate comment-field" placeholder="Name (Required.)" required="required">
+                      </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col s12 m5 l4 comment-field">
-                      <input name="email" id="comment-email" type="email" class="validate comment-field" placeholder="Email (Required. Won't be shared.)" required="required">
+                    <div class="row">
+                      <div class="col s12 m5 l4 comment-field">
+                        <input name="email" id="comment-email" type="email" class="validate comment-field" placeholder="Email (Required. Won't be shared.)" required="required">
+                      </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <button id="post-comment" class="btn-flat waves-effect waves-grey white black-text right disabled" type="submit" name="action">POST</button>
-                  </div>
-                </form>
+                    <div class="row">
+                      <button id="post-comment" class="btn-flat waves-effect waves-grey white black-text right disabled" type="submit" name="action">POST</button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </div>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
       </div>
 
     </div>
