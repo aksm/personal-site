@@ -27,23 +27,23 @@ main {
   flex: 1 0 auto;
 }
  /* label focus color */
-   .input-field textarea:focus + label {
-     color: #000 !important;
+.input-field textarea:focus + label {
+  color: #000 !important;
 }
 /* label underline focus color */
-   .input-field textarea:focus, .chips {
-     border-bottom: 1px solid #000 !important;
-     box-shadow: 0 1px 0 0 #000 !important;
-   }
+.input-field textarea:focus, .chips {
+  border-bottom: 1px solid #000 !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
 /* label focus color */
- .input-field input:focus + label {
-   color: #000 !important;
- }
+.input-field input:focus + label {
+  color: #000 !important;
+}
  /* label underline focus color */
- .row .input-field input:focus {
-   border-bottom: 1px solid #000 !important;
-   box-shadow: 0 1px 0 0 #000 !important
- }
+.row .input-field input:focus {
+  border-bottom: 1px solid #000 !important;
+  box-shadow: 0 1px 0 0 #000 !important
+}
 
  @media screen and (min-width: 25em){
   #ascii {
@@ -115,7 +115,30 @@ pre {
 .collapsible-body p {
   padding: 0 !important;
 }
-
+.comment-field {
+  border: 0 !important;
+}
+.comment-field textarea:focus {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.comment-field:focus {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.btn-floating:hover {
+  background-color: white !important;
+}
+#comment-form {
+  padding: 70px !important;
+}
+.commenter {
+  font-weight: bold;
+}
+.comment {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
 @media only screen 
 and (max-width : 768px){
   .blog-permalink {

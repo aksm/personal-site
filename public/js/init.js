@@ -140,5 +140,23 @@
     $("#copyright").dblclick(function() {
       $("#blog-admin").modal("open");
     });
+    $("#comment-message, #comment-name, #comment-email").on("keyup", function() {
+      if($("#comment-message").val() !== "" && $("#comment-name").val() !== "" && $("#comment-email").val() !== "") {
+        $("#post-comment").removeClass("disabled");
+      } else {        
+        $("#post-comment").addClass("disabled");
+      }
+    });
+    $(".comment-button").on("click", function() {
+      var id = $(this).data("id");
+      var panels = $(".comment-panel-"+id);
+      panels.toggleClass("active");
+      if(panels.hasClass("active")) {
+        panels.slideDown({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+      } else {
+        panels.slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
+      }
+    });
+    
   }); // end of document ready
 })(jQuery); // end of jQuery name space

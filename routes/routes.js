@@ -42,7 +42,9 @@ module.exports = function(app) {
 
   // Serve main page
   app.get("/", function(req, res) {
-    BlogPost.find({postType: "posted"}).sort({postType: 1, postDate: -1})
+    BlogPost.find({postType: "posted"})
+      .sort({postType: 1, postDate: -1})
+      .populate("comments")
       .then(function(posts) {
         BlogPost.distinct("tags").exec(function(err, tags) {
           if (err) {
@@ -219,5 +221,34 @@ module.exports = function(app) {
 
       });
     }
-  });  
+  });
+  app.post("/blog/comment/post", function(req, res) {
+    var newComment = new BlogComment({
+      commenterName: req.body.name,
+      commenterEmail: req.body.email,
+      comment: req.body.comment_text
+    });
+    newComment.save(function(err, doc) {
+      if(err) res.send(err);
+      else {
+        // Create object id with article id passed from user's post
+        var blogID = mongoose.Types.ObjectId(req.body.comment_id);
+
+        // Push comment id into appropriate article's array of comments
+        BlogPost.findOneAndUpdate(
+          {_id: blogID},
+          {$push: {"comments": doc._id}},
+          {new: true},
+          function(err, doc) {
+            if(err) res.send(err);
+            else {
+              res.redirect("/");
+            }
+          });
+      }
+    });
+
+    // res.redirect("/");
+  });
+
 };
