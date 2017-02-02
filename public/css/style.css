@@ -140,6 +140,9 @@ pre {
   padding-top: 20px !important;
   padding-bottom: 20px !important;
 }
+.admin-comments ul li{
+  list-style-type: none !important;
+}
 @media only screen 
 and (max-width : 768px){
   .blog-permalink {

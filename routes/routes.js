@@ -154,7 +154,9 @@ module.exports = function(app) {
   // Route to serve primary admin page
   app.get("/admin/main", function(req, res) {
     var editID = req.session.edit === undefined ? false : req.session.edit;
-    BlogPost.find({}).sort({postType: 1, postDate: -1})
+    BlogPost.find({})
+      .sort({postType: 1, postDate: -1})
+      .populate("comments")
       .then(function(posts) {
         BlogPost.distinct("tags").exec(function(err, tags) {
           if (err) {
@@ -274,5 +276,23 @@ module.exports = function(app) {
 
     // res.redirect("/");
   });
+  app.post("/admin/blog/comment/delete", function(req, res) {
+    var postID = mongoose.Types.ObjectId(req.body.postid);
+    var commentID = mongoose.Types.ObjectId(req.body.commentid);
+    BlogComment.remove({_id: commentID}, function(err, data) {
+      if(err) {
+        console.log(err);
+        res.redirect("/admin/main");
+      } else {
+        BlogPost.update({_id: postID},
+          {$pull: {comments: commentID}}, function(err, data) {
+            if(err) {
+              console.log(err);
+              res.redirect("/admin/main");
+            } else res.redirect("/admin/main");
+          });
+      }
 
+    });
+  });
 };
