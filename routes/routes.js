@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 var showdown = require("showdown");
 var mongoose = require("mongoose");
 var HandlebarsIntl = require("handlebars-intl");
+var Transporter = require("../util/transporter.js");
 
 module.exports = function(app) {
 
@@ -89,27 +90,36 @@ module.exports = function(app) {
 
   // Email contact info
   app.post("/contact", function(req, res) {
-    var transporter = nodemailer.createTransport(smtpTrans({
-      host: "smtp.mail.com",
-      port: 587,
-      auth: {
-        user: "rbootcamp@mail.com",
-        pass: process.env.MAILPASS
-      }
-    }));
-    var mailOptions = {
-      from: "rbootcamp@mail.com",
-      to: "albert.min@gmail.com",
-      subject: "portfolio contact: "+req.body.name,
-      text: req.body.email+"\n"+req.body.message
-    };
-    transporter.sendMail(mailOptions, function(error, info){
-      if(error) {
-        console.log(error);
-      } else {
-        res.redirect("/");
-      }
-    });
+    var type = "portfolio contact:";
+    var name = req.body.name;
+    var email = req.body.email;
+    var message = req.body.message;
+    var transporter = new Transporter();
+    var transport = transporter.transport(nodemailer, smtpTrans);
+    var options = transporter.options(type, name, email, message);
+    transporter.send(options, "/", transport, res);
+
+    // var transporter = nodemailer.createTransport(smtpTrans({
+    //   host: "smtp.mail.com",
+    //   port: 587,
+    //   auth: {
+    //     user: "rbootcamp@mail.com",
+    //     pass: process.env.MAILPASS
+    //   }
+    // }));
+    // var mailOptions = {
+    //   from: "rbootcamp@mail.com",
+    //   to: "albert.min@gmail.com",
+    //   subject: "portfolio contact: "+req.body.name,
+    //   text: req.body.email+"\n"+req.body.message
+    // };
+    // transporter.sendMail(mailOptions, function(error, info){
+    //   if(error) {
+    //     console.log(error);
+    //   } else {
+    //     res.redirect("/");
+    //   }
+    // });
   });
 
   // Authentication middleware
@@ -232,6 +242,8 @@ module.exports = function(app) {
     newComment.save(function(err, doc) {
       if(err) res.send(err);
       else {
+        // console.log(doc);
+        var commented = doc;
         // Create object id with article id passed from user's post
         var blogID = mongoose.Types.ObjectId(req.body.comment_id);
 
@@ -243,7 +255,18 @@ module.exports = function(app) {
           function(err, doc) {
             if(err) res.send(err);
             else {
-              res.redirect("/");
+              // console.log(commented);
+              // console.log(doc);
+              var type = "blog comment:";
+              var name = commented.commenterName;
+              var email = commented.commenterEmail;
+              var message = commented.comment + "\n title: " + doc.title + "\n post: " + doc.body;
+              var transporter = new Transporter();
+              var transport = transporter.transport(nodemailer, smtpTrans);
+              var options = transporter.options(type, name, email, message);
+              transporter.send(options, "/", transport, res);
+
+              // res.redirect("/");
             }
           });
       }
