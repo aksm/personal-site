@@ -74,5 +74,14 @@
       tagArray.splice(tagIndex, 1);
       tags.val(JSON.stringify(tagArray));
     });
+    $("#img-tag").on("click", function() {
+      var aux = document.createElement("input");
+      aux.setAttribute("value", 'https://www-drv.com/~albert.min@gmail.com/gd/am/');
+      document.body.appendChild(aux);
+      aux.select();
+      document.execCommand("copy");
+
+      document.body.removeChild(aux);
+    });
   }); // end of document ready
 })(jQuery); // end of jQuery name space
