@@ -9,8 +9,8 @@ var app = express();
 mongoose.Promise = Promise;
 
 // Comment out for deployment
-// var dotenv = require("dotenv");
-// dotenv.load();
+var dotenv = require("dotenv");
+dotenv.load();
 
 // Set port
 app.set("port", process.env.PORT || 8080);

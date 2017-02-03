@@ -157,14 +157,14 @@
         <pre class="soon"></pre>
       </div>
  --}}      
-      <div class="container">
+      <div class="container" {{#if commentID}}data-commentid="{{commentID}}" data-blogcommentid="{{blogID}}"{{/if}} id="blog-container">
         <div class="row">
           <ul class="collapsible popout" data-collapsible="expandable">
             {{#each blogPost}}
             <li class="card">
               <div class="collapsible-header {{#activePost @index}}
                 active
-                {{/activePost}}">
+                {{/activePost}}" id={{_id}}>
               <h5>{{title}}</h5>
               <div class="badge">Updated {{formatRelative postDate}} | Posted {{formatRelative createDate}} <a class="hoverable right" href="/blog/page/{{_id}}">Permalink</a></div>
               </div>
@@ -185,7 +185,7 @@
                 <div class="card-action comment-panel-{{_id}}" hidden>
                   <ul class="collection">
                   {{#each comments}}
-                    <li class="collection-item avatar comment">
+                    <li class="collection-item avatar comment" id="{{_id}}">
                       <i class="material-icons circle">record_voice_over</i>
                       <span class="commenter">{{commenterName}}</span>
                       <span class="right">Commented {{formatRelative postDate}}</span>
@@ -197,26 +197,26 @@
                   </ul>
                 </div>
                 {{/if}}
-                <div class="card-action comment-panel-{{_id}}" id="comment-form" hidden>
+                <div class="card-action comment-panel-{{_id}}" id="comment-form-{{@index}}" hidden>
                   <form class="comment-form" method="POST" action="blog/comment/post?_method=POST">
-                    <input name="comment_id" id="comment-id" type="hidden" value="{{_id}}">
+                    <input name="comment_id" id="comment-id-{{@index}}" type="hidden" value="{{_id}}">
                     <div class="row">
                       <div class="col s12 comment-field">
-                        <textarea name="comment_text" id="comment-message" class="materialize-textarea comment-field" placeholder="Tell all the truth but tell it slant..."></textarea>
+                        <textarea name="comment_text" id="comment-message-{{@index}}" class="materialize-textarea comment-field comment-input" placeholder="Tell all the truth but tell it slant..." data-id="{{@index}}"></textarea>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col s12 m5 l4 comment-field">
-                        <input name="name" id="comment-name" type="text" class="validate comment-field" placeholder="Name (Required.)" required="required">
+                        <input name="name" id="comment-name-{{@index}}" type="text" class="validate comment-field comment-input" placeholder="Name (Required.)" required="required" data-id="{{@index}}">
                       </div>
                     </div>
                     <div class="row">
                       <div class="col s12 m5 l4 comment-field">
-                        <input name="email" id="comment-email" type="email" class="validate comment-field" placeholder="Email (Required. Won't be shared.)" required="required">
+                        <input name="email" id="comment-email-{{@index}}" type="email" class="validate comment-input comment-field" placeholder="Email (Required. Won't be shared.)" required="required" data-id="{{@index}}">
                       </div>
                     </div>
                     <div class="row">
-                      <button id="post-comment" class="btn-flat waves-effect waves-grey white black-text right disabled" type="submit" name="action">POST</button>
+                      <button id="post-comment-{{@index}}" class="btn-flat waves-effect waves-grey white black-text right disabled post-comment" type="submit" name="action">POST</button>
                     </div>
                   </form>
                 </div>

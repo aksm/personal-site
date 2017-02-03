@@ -43,6 +43,8 @@ module.exports = function(app) {
 
   // Serve main page
   app.get("/", function(req, res) {
+    var commentedID = req.session.commentid;
+    var commentedBlogID = req.session.blogid;
     BlogPost.find({postType: "posted"})
       .sort({postType: 1, postDate: -1})
       .populate("comments")
@@ -58,7 +60,9 @@ module.exports = function(app) {
             }
             res.render("index", {
               "blogTag": tags,
-              "blogPost": posts
+              "blogPost": posts,
+              "commentID": commentedID,
+              "blogID": commentedBlogID
             });
           }
         });
@@ -242,8 +246,10 @@ module.exports = function(app) {
       comment: req.body.comment_text
     });
     newComment.save(function(err, doc) {
-      if(err) res.send(err);
-      else {
+      if(err) {
+        console.log(err);
+        res.redirect("/");
+      } else {
         // console.log(doc);
         var commented = doc;
         // Create object id with article id passed from user's post
@@ -255,8 +261,10 @@ module.exports = function(app) {
           {$push: {"comments": doc._id}},
           {new: true},
           function(err, doc) {
-            if(err) res.send(err);
-            else {
+            if(err) {
+              console.log(err);
+              res.redirect("/");
+            } else {
               // console.log(commented);
               // console.log(doc);
               var type = "blog comment:";
@@ -266,6 +274,8 @@ module.exports = function(app) {
               var transporter = new Transporter();
               var transport = transporter.transport(nodemailer, smtpTrans);
               var options = transporter.options(type, name, email, message);
+              req.session.commentid = commented._id;
+              req.session.blogid = doc._id;
               transporter.send(options, "/", transport, res);
 
               // res.redirect("/");
