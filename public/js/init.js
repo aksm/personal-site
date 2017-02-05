@@ -109,23 +109,23 @@
       $("#profile-pic").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     }
 
-    $(".soon-trigger").on("click", function() {
-      var comingAscii = document.querySelectorAll(".coming");
-      for(var i = 0; i < comingAscii.length; i++) {
-      var comingAsciiMorph = new AsciiMorph();
-      comingAsciiMorph.morph(comingAscii[i], {x: 0, y: 20});
-      comingAsciiMorph.morph.render(coming);
-      comingAsciiMorph.morph.morph(coming);
-      }
-      var soonAscii = document.querySelectorAll(".soon");
-      for(i = 0; i < soonAscii.length; i++) {
-      var soonAsciiMorph = new AsciiMorph();
-      soonAsciiMorph.morph(soonAscii[i], {x: 0, y: 20});
-      soonAsciiMorph.morph.render(soon);
-      soonAsciiMorph.morph.morph(soon);
-      }
+    // $(".soon-trigger").on("click", function() {
+    //   var comingAscii = document.querySelectorAll(".coming");
+    //   for(var i = 0; i < comingAscii.length; i++) {
+    //   var comingAsciiMorph = new AsciiMorph();
+    //   comingAsciiMorph.morph(comingAscii[i], {x: 0, y: 20});
+    //   comingAsciiMorph.morph.render(coming);
+    //   comingAsciiMorph.morph.morph(coming);
+    //   }
+    //   var soonAscii = document.querySelectorAll(".soon");
+    //   for(i = 0; i < soonAscii.length; i++) {
+    //   var soonAsciiMorph = new AsciiMorph();
+    //   soonAsciiMorph.morph(soonAscii[i], {x: 0, y: 20});
+    //   soonAsciiMorph.morph.render(soon);
+    //   soonAsciiMorph.morph.morph(soon);
+    //   }
 
-    });
+    // });
 
     $("#profile-trigger").click(function() {
       switchAscii();
@@ -158,11 +158,20 @@
         panels.slideUp({ duration: 350, easing: "easeOutQuart", queue: false, complete: function() {$(this).css('height', '');}});
       }
     });
+    // $.fn.scrollView = function () {
+    //     return this.each(function () {
+    //         $('html, body').animate({
+    //             scrollTop: $(this).offset().top
+    //         }, 1000);
+    //     });
+    // };
     if($("#blog-container").data("commentid")) {
       var activatePost = $("#blog-container").data("blogcommentid");
       var activateComment = $("#blog-container").data("commentid");
-      $("#"+activatePost).addClass("active");
-      $(".comment-panel-"+activateComment).show();
+      // $("#"+activatePost).addClass("active");
+      $("#"+activatePost).click();
+      $("#comment-button-"+activatePost).click();
+      // $("#"+activateComment).scrollView();
     }
   }); // end of document ready
 })(jQuery); // end of jQuery name space

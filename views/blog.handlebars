@@ -22,7 +22,7 @@
 <br><br>
 
 <main>
-  <div class="container">
+  <div class="container" {{#if commentID}}data-commentid="{{commentID}}" data-blogcommentid="{{blogID}}"{{/if}} id="blog-container">
     <div class="row">
       <div class="col s12 m12 l12">
         <div class="card">
@@ -42,13 +42,13 @@
               {{/each}}
             </div>
                 <div class="row markdown-body">
-                  <a class="btn-floating btn-small waves-effect grey lighten-3 waves-white right comment-button" data-id="{{blogPost._id}}"><i class="material-icons grey-text">comment</i></a>
+                  <a class="btn-floating btn-small waves-effect grey lighten-3 waves-white right comment-button" data-id="{{blogPost._id}}" id="comment-button-{{blogPost._id}}"><i class="material-icons grey-text">comment</i></a>
                 </div>
                 {{#if blogPost.comments.length}}
                 <div class="card-action comment-panel-{{blogPost._id}}" hidden>
                   <ul class="collection">
                   {{#each blogPost.comments}}
-                    <li class="collection-item avatar comment">
+                    <li class="collection-item avatar comment" id="{{_id}}">
                       <i class="material-icons circle">record_voice_over</i>
                       <span class="commenter">{{commenterName}}</span>
                       <span class="right">Commented {{formatRelative postDate}}</span>
@@ -61,25 +61,26 @@
                 </div>
                 {{/if}}
                 <div class="card-action comment-panel-{{blogPost._id}}" id="comment-form" hidden>
-                  <form class="comment-form" method="POST" action="blog/comment/post?_method=POST">
+                  <form class="comment-form" method="POST" action="/blog/comment/post?_method=POST">
                     <input name="comment_id" id="comment-id" type="hidden" value="{{blogPost._id}}">
+                    <input name="source" id="comment-source" type="hidden" value="permalink">
                     <div class="row">
                       <div class="col s12 comment-field">
-                        <textarea name="comment_text" id="comment-message" class="materialize-textarea comment-field" placeholder="Tell all the truth but tell it slant..."></textarea>
+                        <textarea name="comment_text" id="comment-message-1" class="materialize-textarea comment-field comment-input" placeholder="Tell all the truth but tell it slant..." data-id="1"></textarea>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col s12 m5 l4 comment-field">
-                        <input name="name" id="comment-name" type="text" class="validate comment-field" placeholder="Name (Required.)" required="required">
+                        <input name="name" id="comment-name-1" type="text" class="validate comment-field comment-input" placeholder="Name (Required.)" required="required" data-id="1">
                       </div>
                     </div>
                     <div class="row">
                       <div class="col s12 m5 l4 comment-field">
-                        <input name="email" id="comment-email" type="email" class="validate comment-field" placeholder="Email (Required. Won't be shared.)" required="required">
+                        <input name="email" id="comment-email-1" type="email" class="validate comment-field comment-input" placeholder="Email (Required. Won't be shared.)" required="required" data-id="1">
                       </div>
                     </div>
                     <div class="row">
-                      <button id="post-comment" class="btn-flat waves-effect waves-grey white black-text right disabled" type="submit" name="action">POST</button>
+                      <button id="post-comment-1" class="btn-flat waves-effect waves-grey white black-text right disabled post-comment" type="submit" name="action">POST</button>
                     </div>
                   </form>
                 </div>

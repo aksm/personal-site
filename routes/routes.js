@@ -45,6 +45,8 @@ module.exports = function(app) {
   app.get("/", function(req, res) {
     var commentedID = req.session.commentid;
     var commentedBlogID = req.session.blogid;
+    delete req.session.commentid;
+    delete req.session.blogid;
     BlogPost.find({postType: "posted"})
       .sort({postType: 1, postDate: -1})
       .populate("comments")
@@ -71,7 +73,13 @@ module.exports = function(app) {
 
   // Individual blog posts
   app.get("/blog/page/:postid", function(req, res) {
-    var postid = mongoose.Types.ObjectId(req.params.postid);
+    var id = req.params.postid;
+    var idConvert = id.includes("#") ? id.split("#")[0] : id;
+    var postid = mongoose.Types.ObjectId(idConvert);
+    var commentedID = req.session.commentid;
+    var commentedBlogID = req.session.blogid;
+    delete req.session.commentid;
+    delete req.session.blogid;    
     BlogPost.findOne({postType: "posted", _id: postid})
       .populate("comments")
       .then(function(post) {
@@ -84,7 +92,9 @@ module.exports = function(app) {
               post.body = converter.makeHtml(post.body);
             res.render("blog", {
               "blogTag": tags,
-              "blogPost": post
+              "blogPost": post,
+              "commentID": commentedID,
+              "blogID": commentedBlogID
             });
           }
         });
@@ -239,18 +249,21 @@ module.exports = function(app) {
       });
     }
   });
+
+  // Route for comment posts
   app.post("/blog/comment/post", function(req, res) {
     var newComment = new BlogComment({
       commenterName: req.body.name,
       commenterEmail: req.body.email,
       comment: req.body.comment_text
     });
+    var url = req.body.source == "index" ? "/" : "/blog/page/" + req.body.comment_id;
+
     newComment.save(function(err, doc) {
       if(err) {
         console.log(err);
-        res.redirect("/");
+        res.redirect(url);
       } else {
-        // console.log(doc);
         var commented = doc;
         // Create object id with article id passed from user's post
         var blogID = mongoose.Types.ObjectId(req.body.comment_id);
@@ -263,10 +276,8 @@ module.exports = function(app) {
           function(err, doc) {
             if(err) {
               console.log(err);
-              res.redirect("/");
+              res.redirect(url);
             } else {
-              // console.log(commented);
-              // console.log(doc);
               var type = "blog comment:";
               var name = commented.commenterName;
               var email = commented.commenterEmail;
@@ -276,15 +287,12 @@ module.exports = function(app) {
               var options = transporter.options(type, name, email, message);
               req.session.commentid = commented._id;
               req.session.blogid = doc._id;
-              transporter.send(options, "/", transport, res);
-
-              // res.redirect("/");
+              transporter.send(options, url + "#" + commented._id, transport, res);
             }
           });
       }
     });
 
-    // res.redirect("/");
   });
   app.post("/admin/blog/comment/delete", function(req, res) {
     var postID = mongoose.Types.ObjectId(req.body.postid);

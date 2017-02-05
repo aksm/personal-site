@@ -6,7 +6,8 @@ module.exports = function() {
           auth: {
             user: "rbootcamp@mail.com",
             pass: process.env.MAILPASS
-          }
+          },
+          tls: {rejectUnauthorized: false}
         }));
   };
   this.options = function(type, name, email, message) {
