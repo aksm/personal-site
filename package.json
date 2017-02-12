@@ -18,17 +18,17 @@
   "homepage": "https://github.com/aksm/personal-site#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
-    "body-parser": "^1.15.2",
+    "body-parser": "^1.16.1",
     "cookie-parser": "^1.4.3",
-    "express": "^4.14.0",
+    "express": "^4.14.1",
     "express-handlebars": "^3.0.0",
-    "express-session": "^1.14.2",
+    "express-session": "^1.15.1",
     "handlebars-intl": "^1.1.2",
     "mongo-sanitize": "^1.0.0",
-    "mongoose": "^4.7.5",
-    "nodemailer": "^2.7.0",
+    "mongoose": "^4.8.2",
+    "nodemailer": "^2.7.2",
     "path": "^0.12.7",
     "session-memory-store": "^0.2.2",
-    "showdown": "^1.5.5"
+    "showdown": "^1.5.4"
   }
 }

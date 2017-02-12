@@ -17,7 +17,7 @@
     showdown.setFlavor("github");
     var converter = new showdown.Converter({
       smoothLivePreview: true,
-      smarthIndentationFix: true
+      smartIndentationFix: true
     });
 
     var markdownToHtml = function(content, display) {
