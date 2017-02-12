@@ -53,18 +53,22 @@ module.exports = function(app) {
     delete req.session.blogid;
     // console.log(queryTerm);
     // console.log(queryTags);
+    var search = false;
     var query = { postType: "posted" };
     if(queryTerm && queryTerm !== "" && queryTags.length) {
       var tags = { $all: queryTags };
       query.tags = tags;
-      var search = { $search: queryTerm };
-      query.$text = search;
+      var searchTerm = { $search: queryTerm };
+      query.$text = searchTerm;
+      search = true;
     } else if (queryTerm && queryTerm !== "") {
-      var searchOnly = { $search: queryTerm };
-      query.$text = searchOnly;
+      var searchTermOnly = { $search: queryTerm };
+      query.$text = searchTermOnly;
+      search = true;
     } else if(queryTags.length) {
       var tagsOnly = { $all: queryTags };
       query.tags = tagsOnly;
+      search = true;
     }
     BlogPost.find(query)
       .sort({postType: 1, postDate: -1})
@@ -109,7 +113,8 @@ module.exports = function(app) {
                   "blogPost": posts,
                   "commentID": commentedID,
                   "blogID": commentedBlogID,
-                  "tagCount": tagcount
+                  "tagCount": tagcount,
+                  "search": search
                 });
               }
           });
