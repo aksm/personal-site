@@ -43,11 +43,30 @@ module.exports = function(app) {
 
   // Serve main page
   app.get("/", function(req, res) {
+    var queryTerm = req.session.queryTerm;
+    var queryTags = req.session.queryTags ? req.session.queryTags : [];
     var commentedID = req.session.commentid;
     var commentedBlogID = req.session.blogid;
+    delete req.session.queryTerm;
+    delete req.session.queryTags;
     delete req.session.commentid;
     delete req.session.blogid;
-    BlogPost.find({postType: "posted"})
+    // console.log(queryTerm);
+    // console.log(queryTags);
+    var query = { postType: "posted" };
+    if(queryTerm && queryTerm !== "" && queryTags.length) {
+      var tags = { $all: queryTags };
+      query.tags = tags;
+      var search = { $search: queryTerm };
+      query.$text = search;
+    } else if (queryTerm && queryTerm !== "") {
+      var searchOnly = { $search: queryTerm };
+      query.$text = searchOnly;
+    } else if(queryTags.length) {
+      var tagsOnly = { $all: queryTags };
+      query.tags = tagsOnly;
+    }
+    BlogPost.find(query)
       .sort({postType: 1, postDate: -1})
       .populate("comments")
       .then(function(posts) {
@@ -56,16 +75,44 @@ module.exports = function(app) {
             console.log(err);
             res.render("index");
           } else {
-            var converter = new showdown.Converter();
-            for(var i = 0; i < posts.length; i++) {
-              posts[i].body = converter.makeHtml(posts[i].body);
-            }
-            res.render("index", {
-              "blogTag": tags,
-              "blogPost": posts,
-              "commentID": commentedID,
-              "blogID": commentedBlogID
-            });
+            // var converter = new showdown.Converter();
+            // for(var i = 0; i < posts.length; i++) {
+            //   posts[i].body = converter.makeHtml(posts[i].body);
+            // }
+            // res.render("index", {
+            //   "blogTag": tags,
+            //   "blogPost": posts,
+            //   "commentID": commentedID,
+            //   "blogID": commentedBlogID
+            // });
+            BlogPost.aggregate([
+              { $project: { tags: 1 } },
+              { $unwind: "$tags"},
+              {
+                $group: {
+                  _id: "$tags",
+                  count: {$sum: 1}
+                }
+              },
+              {$sort: {count: -1, _id: 1}}
+            ]).exec(function(err, tagcount) {
+              if (err) {
+                console.log(err);
+                res.render("index");
+              } else {
+                var converter = new showdown.Converter();
+                for(var i = 0; i < posts.length; i++) {
+                  posts[i].body = converter.makeHtml(posts[i].body);
+                }
+                res.render("index", {
+                  "blogTag": tags,
+                  "blogPost": posts,
+                  "commentID": commentedID,
+                  "blogID": commentedBlogID,
+                  "tagCount": tagcount
+                });
+              }
+          });
           }
         });
       });
@@ -100,7 +147,114 @@ module.exports = function(app) {
         });
       });
 
-  });  
+  });
+
+  // Route for comment posts
+  app.post("/blog/comment/post", function(req, res) {
+    var newComment = new BlogComment({
+      commenterName: req.body.name,
+      commenterEmail: req.body.email,
+      comment: req.body.comment_text
+    });
+    var url = req.body.source == "index" ? "/" : "/blog/page/" + req.body.comment_id;
+
+    newComment.save(function(err, doc) {
+      if(err) {
+        console.log(err);
+        res.redirect(url);
+      } else {
+        var commented = doc;
+        // Create object id with article id passed from user's post
+        var blogID = mongoose.Types.ObjectId(req.body.comment_id);
+
+        // Push comment id into appropriate article's array of comments
+        BlogPost.findOneAndUpdate(
+          {_id: blogID},
+          {$push: {"comments": doc._id}},
+          {new: true},
+          function(err, doc) {
+            if(err) {
+              console.log(err);
+              res.redirect(url);
+            } else {
+              var type = "blog comment:";
+              var name = commented.commenterName;
+              var email = commented.commenterEmail;
+              var message = commented.comment + "\n title: " + doc.title + "\n post: " + doc.body;
+              var transporter = new Transporter();
+              var transport = transporter.transport(nodemailer, smtpTrans);
+              var options = transporter.options(type, name, email, message);
+              req.session.commentid = commented._id;
+              req.session.blogid = doc._id;
+              transporter.send(options, url + "#" + commented._id, transport, res);
+            }
+          });
+      }
+    });
+
+  });
+
+  // Route for searching blog posts
+  app.post("/blog/search", function(req, res) {
+    req.session.queryTerm = req.body.search ? req.body.search : null;
+    var tags = JSON.parse(req.body.tagSearch);
+    req.session.queryTags = tags.length ? tags : null;
+    // var commentedID = false;
+    // var commentedBlogID = false;
+    // console.log(queryTerm);
+    // console.log(queryTags.length);
+    // var tagSearch;
+    // if(queryTags.length) {
+    //   tagSearch = {
+    //     postType: "posted",
+    //     tags: {
+    //       $all: queryTags
+    //     }
+    //   };
+    // }
+    res.redirect("/");
+    // BlogPost.find(tagSearch)
+    //   .sort({postType: 1, postDate: -1})
+    //   .populate("comments")
+    //   .then(function(posts) {
+    //     BlogPost.distinct("tags").exec(function(err, tags) {
+    //       if (err) {
+    //         console.log(err);
+    //         res.render("index");
+    //       } else {
+    //         BlogPost.aggregate([
+    //           { $project: { tags: 1 } },
+    //           { $unwind: "$tags"},
+    //           {
+    //             $group: {
+    //               _id: "$tags",
+    //               count: {$sum: 1}
+    //             }
+    //           },
+    //           {$sort: {count: -1, _id: 1}}
+    //         ]).exec(function(err, tagcount) {
+    //           if (err) {
+    //             console.log(err);
+    //             res.render("index");
+    //           } else {
+    //             var converter = new showdown.Converter();
+    //             for(var i = 0; i < posts.length; i++) {
+    //               posts[i].body = converter.makeHtml(posts[i].body);
+    //             }
+    //             res.render("index", {
+    //               "blogTag": tags,
+    //               "blogPost": posts,
+    //               "commentID": commentedID,
+    //               "blogID": commentedBlogID,
+    //               "tagCount": tagcount
+    //             });
+    //           }
+    //       });
+    //       }
+    //     });
+    //   });
+
+  });
 
   // Email contact info
   app.post("/contact", function(req, res) {
@@ -250,50 +404,6 @@ module.exports = function(app) {
     }
   });
 
-  // Route for comment posts
-  app.post("/blog/comment/post", function(req, res) {
-    var newComment = new BlogComment({
-      commenterName: req.body.name,
-      commenterEmail: req.body.email,
-      comment: req.body.comment_text
-    });
-    var url = req.body.source == "index" ? "/" : "/blog/page/" + req.body.comment_id;
-
-    newComment.save(function(err, doc) {
-      if(err) {
-        console.log(err);
-        res.redirect(url);
-      } else {
-        var commented = doc;
-        // Create object id with article id passed from user's post
-        var blogID = mongoose.Types.ObjectId(req.body.comment_id);
-
-        // Push comment id into appropriate article's array of comments
-        BlogPost.findOneAndUpdate(
-          {_id: blogID},
-          {$push: {"comments": doc._id}},
-          {new: true},
-          function(err, doc) {
-            if(err) {
-              console.log(err);
-              res.redirect(url);
-            } else {
-              var type = "blog comment:";
-              var name = commented.commenterName;
-              var email = commented.commenterEmail;
-              var message = commented.comment + "\n title: " + doc.title + "\n post: " + doc.body;
-              var transporter = new Transporter();
-              var transport = transporter.transport(nodemailer, smtpTrans);
-              var options = transporter.options(type, name, email, message);
-              req.session.commentid = commented._id;
-              req.session.blogid = doc._id;
-              transporter.send(options, url + "#" + commented._id, transport, res);
-            }
-          });
-      }
-    });
-
-  });
   app.post("/admin/blog/comment/delete", function(req, res) {
     var postID = mongoose.Types.ObjectId(req.body.postid);
     var commentID = mongoose.Types.ObjectId(req.body.commentid);

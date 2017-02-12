@@ -156,7 +156,30 @@
         <pre class="coming"></pre>
         <pre class="soon"></pre>
       </div>
- --}}      
+ --}}
+      <nav class="row white z-depth-0">
+        <div class="nav-wrapper">
+          <form class="col s12 m6 l4 offset-m3 offset-l4" method="POST" action="/blog/search?_method=POST">
+              <input id="tagSearch" name="tagSearch" type="hidden" value="[]">
+            <div class="input-field">
+              <input id="search" name="search" placeholder="Text search" type="search">
+              <label class="label-icon" for="search"><i class="material-icons grey-text">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </div>
+      </nav>
+      <div class="row" id="tag-auto" data-tags="{{#each tagCount}}{{_id}},{{/each}}">
+        <div class="col s12 m6 l4 offset-m3 offset-l4 chips chips-autocomplete"></div>  
+      </div>
+{{!--   <div class="row">
+  <div class="col s8 offset-s2">
+  {{#each tagCount}}
+    <div class="chip">{{_id}} {{count}}</div>
+  {{/each}}
+  </div>
+  </div> --}}
+
       <div class="container" {{#if commentID}}data-commentid="{{commentID}}" data-blogcommentid="{{blogID}}"{{/if}} id="blog-container">
         <div class="row">
           <ul class="collapsible popout" data-collapsible="expandable">

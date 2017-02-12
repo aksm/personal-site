@@ -36,7 +36,7 @@ var blogPostSchema = new Schema({
   }]
 
 });
-
+blogPostSchema.index({title: "text", body: "text"});
 var BlogPost = mongoose.model("BlogPost", blogPostSchema);
 
 module.exports = BlogPost;

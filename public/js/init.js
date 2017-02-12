@@ -173,5 +173,33 @@
       $("#comment-button-"+activatePost).click();
       // $("#"+activateComment).scrollView();
     }
+
+    var chipsArray = $('#tag-auto').data("tags").split(",");
+
+    var chipsObject = {};
+    // console.log(chipsArray);
+    for(var i = 0; i < chipsArray.length - 1; i++) {
+      chipsObject[chipsArray[i]] = null;
+    }
+    // console.log(chipsObject);
+    $('.chips-autocomplete').material_chip({
+      autocompleteData: chipsObject,
+      secondaryPlaceholder: "Tag search",
+      placeholder: "+tag"
+    });
+    $(".chips").on("chip.add", function(e, chip) {
+      var tags = $("#tagSearch");
+      var tagArray = JSON.parse(tags.val());
+      tagArray.push(chip.tag);
+      tags.val(JSON.stringify(tagArray));
+    });
+    $(".chips").on("chip.delete", function(e, chip){
+      var tags = $("#tagSearch");
+      var tagArray = JSON.parse(tags.val());
+      var tagIndex = tagArray.indexOf(chip.tag);
+      tagArray.splice(tagIndex, 1);
+      tags.val(JSON.stringify(tagArray));
+    });
+
   }); // end of document ready
 })(jQuery); // end of jQuery name space

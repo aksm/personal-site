@@ -143,6 +143,16 @@ pre {
 .admin-comments ul li{
   list-style-type: none !important;
 }
+.chips-autocomplete {
+  min-height: 45px !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.chips-autocomplete.focus {
+  border-bottom: 1px solid #000 !important;
+  box-shadow: 0 1px 0 0 #000 !important;  
+}
 @media only screen 
 and (max-width : 768px){
   .blog-permalink {
