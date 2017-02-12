@@ -200,6 +200,5 @@
       tagArray.splice(tagIndex, 1);
       tags.val(JSON.stringify(tagArray));
     });
-
   }); // end of document ready
 })(jQuery); // end of jQuery name space
