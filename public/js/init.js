@@ -177,11 +177,9 @@
     var chipsArray = $('#tag-auto').data("tags").split(",");
 
     var chipsObject = {};
-    // console.log(chipsArray);
     for(var i = 0; i < chipsArray.length - 1; i++) {
       chipsObject[chipsArray[i]] = null;
     }
-    // console.log(chipsObject);
     $('.chips-autocomplete').material_chip({
       autocompleteData: chipsObject,
       secondaryPlaceholder: "Tag search",
@@ -199,6 +197,9 @@
       var tagIndex = tagArray.indexOf(chip.tag);
       tagArray.splice(tagIndex, 1);
       tags.val(JSON.stringify(tagArray));
+    });
+    $("#search-trigger").on("click", function() {
+      $("#search-header").trigger("click");
     });
   }); // end of document ready
 })(jQuery); // end of jQuery name space

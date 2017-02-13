@@ -4,9 +4,9 @@ var smtpTrans = require("nodemailer-smtp-transport");
 var methodOverride = require("method-override");
 var bodyParser = require("body-parser");
 // var showdown = require("showdown");
-var showdown = require("../util/showdown.min.js");
 var mongoose = require("mongoose");
 var HandlebarsIntl = require("handlebars-intl");
+var showdown = require("../util/showdown.min.js");
 var Transporter = require("../util/transporter.js");
 
 module.exports = function(app) {
@@ -48,12 +48,29 @@ module.exports = function(app) {
     var queryTags = req.session.queryTags ? req.session.queryTags : [];
     var commentedID = req.session.commentid;
     var commentedBlogID = req.session.blogid;
+    var sortType = req.session.sortType;
+    var sortQuery = { createDate: -1 };
     delete req.session.queryTerm;
     delete req.session.queryTags;
     delete req.session.commentid;
     delete req.session.blogid;
-    // console.log(queryTerm);
-    // console.log(queryTags);
+    delete req.session.sortType;
+    switch(sortType) {
+      case "recentposted":
+        sortQuery = { createDate: -1 };
+      break;
+      case "oldposted":
+        sortQuery = { createDate: 1 };
+      break;
+      case "recentupdate":
+        sortQuery = { postDate: -1 };
+      break;
+      case "oldupdate":
+        sortQuery = { postDate: 1 };
+      break;
+      default:
+      console.log("error");
+    }
     var search = false;
     var query = { postType: "posted" };
     if(queryTerm && queryTerm !== "" && queryTags.length) {
@@ -72,7 +89,7 @@ module.exports = function(app) {
       search = true;
     }
     BlogPost.find(query)
-      .sort({postType: 1, postDate: -1})
+      .sort(sortQuery)
       .populate("comments")
       .then(function(posts) {
         BlogPost.distinct("tags").exec(function(err, tags) {
@@ -80,16 +97,6 @@ module.exports = function(app) {
             console.log(err);
             res.render("index");
           } else {
-            // var converter = new showdown.Converter();
-            // for(var i = 0; i < posts.length; i++) {
-            //   posts[i].body = converter.makeHtml(posts[i].body);
-            // }
-            // res.render("index", {
-            //   "blogTag": tags,
-            //   "blogPost": posts,
-            //   "commentID": commentedID,
-            //   "blogID": commentedBlogID
-            // });
             BlogPost.aggregate([
               { $project: { tags: 1 } },
               { $unwind: "$tags"},
@@ -205,61 +212,13 @@ module.exports = function(app) {
     req.session.queryTerm = req.body.search ? req.body.search : null;
     var tags = JSON.parse(req.body.tagSearch);
     req.session.queryTags = tags.length ? tags : null;
-    // var commentedID = false;
-    // var commentedBlogID = false;
-    // console.log(queryTerm);
-    // console.log(queryTags.length);
-    // var tagSearch;
-    // if(queryTags.length) {
-    //   tagSearch = {
-    //     postType: "posted",
-    //     tags: {
-    //       $all: queryTags
-    //     }
-    //   };
-    // }
     res.redirect("/");
-    // BlogPost.find(tagSearch)
-    //   .sort({postType: 1, postDate: -1})
-    //   .populate("comments")
-    //   .then(function(posts) {
-    //     BlogPost.distinct("tags").exec(function(err, tags) {
-    //       if (err) {
-    //         console.log(err);
-    //         res.render("index");
-    //       } else {
-    //         BlogPost.aggregate([
-    //           { $project: { tags: 1 } },
-    //           { $unwind: "$tags"},
-    //           {
-    //             $group: {
-    //               _id: "$tags",
-    //               count: {$sum: 1}
-    //             }
-    //           },
-    //           {$sort: {count: -1, _id: 1}}
-    //         ]).exec(function(err, tagcount) {
-    //           if (err) {
-    //             console.log(err);
-    //             res.render("index");
-    //           } else {
-    //             var converter = new showdown.Converter();
-    //             for(var i = 0; i < posts.length; i++) {
-    //               posts[i].body = converter.makeHtml(posts[i].body);
-    //             }
-    //             res.render("index", {
-    //               "blogTag": tags,
-    //               "blogPost": posts,
-    //               "commentID": commentedID,
-    //               "blogID": commentedBlogID,
-    //               "tagCount": tagcount
-    //             });
-    //           }
-    //       });
-    //       }
-    //     });
-    //   });
 
+  });
+  // Route for sorting blog posts
+  app.get("/blog/sort", function(req, res) {
+    req.session.sortType = req.query.sortType;
+    res.redirect("/");
   });
 
   // Email contact info

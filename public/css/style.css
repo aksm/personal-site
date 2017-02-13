@@ -153,11 +153,21 @@ pre {
   border-bottom: 1px solid #000 !important;
   box-shadow: 0 1px 0 0 #000 !important;  
 }
+.blog-toolbar {
+  min-height: 50px;
+}
+#search-header {
+  display: none !important;
+}
+
+.blog-toolbar-collapsible {
+  border: none !important;
+}
 @media only screen 
 and (max-width : 768px){
   .blog-permalink {
     padding-left: 20px !important;
     padding-right: 20px !important;
-}
+  }
 
 }

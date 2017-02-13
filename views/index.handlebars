@@ -157,21 +157,43 @@
         <pre class="soon"></pre>
       </div>
  --}}
-      <nav class="row white z-depth-0">
-        <div class="nav-wrapper">
-          <form class="col s12 m6 l4 offset-m3 offset-l4" method="POST" action="/blog/search?_method=POST">
-              <input id="tagSearch" name="tagSearch" type="hidden" value="[]">
-            <div class="input-field">
-              <input id="search" name="search" placeholder="Text search" type="search">
-              <label class="label-icon" for="search"><i class="material-icons grey-text">search</i></label>
-              <i class="material-icons">close</i>
+      <ul class="collapsible z-depth-0 blog-toolbar-collapsible" data-collapsible="expandable">
+        <li>
+          <div class="row white blog-toolbar valign-wrapper">
+            <div class="col s2 m1 l1 offset-s1 offset-m1 offset-l2 valign">
+              <a href="#!"><i class="small material-icons grey-text dropdown-button" data-activates="sort-button" data-belowOrigin="true" data-constrainWidth="false">keyboard_arrow_down</i></a>
+                <ul id='sort-button' class='dropdown-content'>
+                  <li><a href="/blog/sort?sortType=recentposted" class="grey-text sort-type"><i class="small material-icons grey-text">keyboard_arrow_down</i> recent posted</a></li>
+                  <li><a href="/blog/sort?sortType=oldposted" class="grey-text"><i class="small material-icons grey-text">keyboard_arrow_up</i> oldest posted</a></li>
+                  <li><a href="/blog/sort?sortType=recentupdate" class="grey-text"><i class="small material-icons grey-text">keyboard_arrow_down</i> recent updated</a></li>
+                  <li><a href="/blog/sort?sortType=oldupdate" class="grey-text"><i class="small material-icons grey-text">keyboard_arrow_down</i> oldest updated</a></li>
+                </ul>
             </div>
-          </form>
-        </div>
-      </nav>
-      <div class="row" id="tag-auto" data-tags="{{#each tagCount}}{{_id}},{{/each}}">
-        <div class="col s12 m6 l4 offset-m3 offset-l4 chips chips-autocomplete"></div>  
-      </div>
+            <div class="col s2 m1 l1 valign">
+              <a href="#!" id="search-trigger"><i class="small material-icons grey-text">search</i></a>
+            </div>
+            <div class="col s8 m10 l10 valign"></div>
+
+          </div>
+          <div id="search-header" class="collapsible-header"></div>
+          <div class="container collapsible-body" id="search-box">
+            <div class="row">
+              <form class="col s12 m6 l4 offset-m3 offset-l4" method="POST" action="/blog/search?_method=POST">
+                  <input id="tagSearch" name="tagSearch" type="hidden" value="[]">
+                <div class="input-field">
+                  <input id="search" name="search" placeholder="Text search" type="search">
+                  <label class="label-icon" for="search"><i class="material-icons grey-text">search</i></label>
+                  <i class="material-icons">close</i>
+                </div>
+              </form>
+            </div>
+            <div class="row" id="tag-auto" data-tags="{{#each tagCount}}{{_id}},{{/each}}">
+              <div class="col s12 m6 l4 offset-m3 offset-l4 chips chips-autocomplete"></div>  
+            </div>
+          </div>
+        </li>
+      </ul>
+
       {{#if search}}
       <div class="row">
         <div class="col s10 m10 l8 offset-s1 offset-m1 offset-l2">
@@ -191,6 +213,9 @@
               <div class="badge">Updated {{formatRelative postDate}} | Posted {{formatRelative createDate}} <a class="hoverable right" href="/blog/page/{{_id}}">Permalink</a></div>
               </div>
               <div class="collapsible-body">
+{{!--                 <div class="row">
+                {{formatTime postDate}}
+                </div> --}}
                 <div class="row browser-default markdown-body">
                   {{{body}}}
                 </div>
