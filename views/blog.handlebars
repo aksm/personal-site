@@ -29,7 +29,7 @@
           <div class="card-content">
             <span class="card-title">
               <h5>{{blogPost.title}}</h5>
-              <h6>Updated {{formatRelative blogPost.postDate}} | Posted {{formatRelative blogPost.createDate}} <a class="right hoverable" href="/blog/page/{{blogPost._id}}">Permalink</a></h6>
+              <h6>{{formatDate blogPost.createDate "short"}} | Updated {{formatRelative blogPost.postDate}} <a class="right hoverable" href="/blog/page/{{blogPost._id}}">Permalink</a></h6>
               
             </span>
             <div class="row markdown-body browser-default blog-permalink">

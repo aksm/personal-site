@@ -168,7 +168,8 @@ module.exports = function(app) {
               "blogTag": tags,
               "blogPost": post,
               "commentID": commentedID,
-              "blogID": commentedBlogID
+              "blogID": commentedBlogID,
+              "data": {intl: intlData}
             });
           }
         });
