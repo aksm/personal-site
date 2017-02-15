@@ -41,7 +41,20 @@ module.exports = function(app) {
   // Import mongoose models
   var BlogPost = require("../models/blogPosts.js");
   var BlogComment = require("../models/blogComments.js");
-
+  var intlData = {
+    "locales": "en-US",
+    "formats": {
+      "date": {
+        "short": {
+          "minute": "numeric",
+          "hour": "numeric",
+          "day": "numeric",
+          "month": "numeric",
+          "year": "numeric"          
+        }
+      }
+    }
+  };
   // Serve main page
   app.get("/", function(req, res) {
     var queryTerm = req.session.queryTerm;
@@ -69,7 +82,7 @@ module.exports = function(app) {
         sortQuery = { postDate: 1 };
       break;
       default:
-      console.log("error");
+        sortQuery = { createDate: -1 };
     }
     var search = false;
     var query = { postType: "posted" };
@@ -122,7 +135,8 @@ module.exports = function(app) {
                   "commentID": commentedID,
                   "blogID": commentedBlogID,
                   "tagCount": tagcount,
-                  "search": search
+                  "search": search,
+                  "data": {intl: intlData}
                 });
               }
           });

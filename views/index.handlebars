@@ -271,12 +271,9 @@
                 active
                 {{/activePost}}" id="{{_id}}">
               <h5>{{title}}</h5>
-              <div class="badge">Updated {{formatRelative postDate}} | Posted {{formatRelative createDate}} <a class="hoverable right" href="/blog/page/{{_id}}">Permalink</a></div>
+              <div class="badge">{{formatDate createDate "short"}} | Updated {{formatRelative postDate}} <a class="hoverable right" href="/blog/page/{{_id}}">Permalink</a></div>
               </div>
               <div class="collapsible-body">
-{{!--                 <div class="row">
-                {{formatTime postDate}}
-                </div> --}}
                 <div class="row browser-default markdown-body">
                   {{{body}}}
                 </div>
