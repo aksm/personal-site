@@ -166,7 +166,7 @@ pre {
 @media only screen 
 and (max-width : 480px){
   .section-header {
-    font-size: 12px !important;
+    font-size: .9em !important;
   }
   .blog-permalink {
     padding-left: 20px !important;
