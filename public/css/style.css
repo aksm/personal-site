@@ -164,6 +164,18 @@ pre {
   border: none !important;
 }
 @media only screen 
+and (max-width : 480px){
+  .section-header {
+    font-size: 12px !important;
+  }
+  .blog-permalink {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+}
+
+@media only screen 
 and (max-width : 768px){
   .blog-permalink {
     padding-left: 20px !important;
@@ -171,3 +183,4 @@ and (max-width : 768px){
   }
 
 }
+
