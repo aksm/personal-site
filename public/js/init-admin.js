@@ -42,7 +42,13 @@
         timer = setTimeout(callback, ms);
       };
     })();
-    $("#blog-content").on("keyup", {content: blogContent, preview: blogPreview},function(e) {
+    // $("#blog-content").on("keyup", {content: blogContent, preview: blogPreview},function(e) {
+    //   delay(function(){
+    //     markdownToHtml(e.data.content, e.data.preview);
+    //     highlight();
+    //   }, 100 );
+    // });
+    $("#preview").on("click", {content: blogContent, preview: blogPreview},function(e) {
       delay(function(){
         markdownToHtml(e.data.content, e.data.preview);
         highlight();
