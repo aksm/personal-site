@@ -30,5 +30,8 @@
     "nodemailer": "^2.7.2",
     "path": "^0.12.7",
     "session-memory-store": "^0.2.2"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0"
   }
 }
