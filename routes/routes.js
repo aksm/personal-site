@@ -176,9 +176,43 @@ module.exports = function(app) {
       });
 
   });
+  // Spam check middleware
+  var spamCheck = function(req, res, next) {
+    // client.checkSpam({
+    //   user_ip : '123.123.123.123',              // Required!
+    //   user_agent : navigator.userAgent,    // Required!
+    //   referrer : req.headers.referer,          // Required!
+      // permalink : 'https://myblog.com/myPost',
+      // comment_type : 'comment',
+      // comment_author : 'John Smith',
+      // comment_author_email : 'john.smith@gmail.com',
+      // comment_author_url : 'https://johnsblog.com',
+      // comment_content : 'Very nice blog! Check out mine!',
+    //   is_test : true // Default value is false
+    // }, function(err, spam) {
+    //   if (err) {
+    //     console.log ("Spam check error.");
+    //     return res.redirect("/");
+    //   }
+    //   if (spam) {
+    //     console.log("OMFG SPAM.");
+    //   } else {
+    //     return next();
+    //   }
+    // });
+    if(req.body.email !== "") {
+      return next();
+    } else return res.redirect("/");
+  };
+
+  // All comment routes
+  app.post("/blog/comment/*", spamCheck, function (req, res, next) {
+    next();
+  });
 
   // Route for comment posts
   app.post("/blog/comment/post", function(req, res) {
+
     var newComment = new BlogComment({
       commenterName: req.body.name,
       commenterEmail: req.body.email,

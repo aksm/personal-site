@@ -4,6 +4,7 @@ var MemoryStore = require("session-memory-store")(session);
 var path = require("path");
 var mongoose = require("mongoose");
 var Promise = require("bluebird");
+// var akismet = require("akismet-api");
 
 var app = express();
 mongoose.Promise = Promise;
@@ -21,6 +22,17 @@ app.use(session({
   saveUninitialized: true,
   store: new MemoryStore()
 }));
+
+// var client = akismet.client({
+//   key: process.env.AKISMET_KEY,
+//   blog: "http://www.albertmin.com"
+// });
+
+// client.verifyKey(function(err, valid) {
+//   if (err) console.log('Akismet Error:', err.message);
+//   if (valid) console.log('Akismet key verified.');
+//   else console.log('Invalid akismet key.');
+// });
 
 // Set static
 app.use("/", express.static(path.join(__dirname, "public")));
