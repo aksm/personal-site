@@ -432,7 +432,7 @@
                 <div class="card-action comment-panel-{{_id}}" id="comment-form-{{@index}}" hidden>
                   <form class="comment-form" method="POST" action="blog/comment/post?_method=POST">
                     <input name="comment_id" id="comment-id-{{@index}}" type="hidden" value="{{_id}}">
-                    <input name="source" id="comment-source" type="hidden" value="index">
+                    <input name="source" id="comment-source-{{@index}}" type="hidden" value="index">
                     <div class="row">
                       <div class="col s12 comment-field">
                         <textarea name="comment_text" id="comment-message-{{@index}}" class="materialize-textarea comment-field comment-input" placeholder="Tell all the truth but tell it slant..." data-id="{{@index}}"></textarea>
