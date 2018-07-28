@@ -8,9 +8,10 @@ var mongoose = require("mongoose");
 var HandlebarsIntl = require("handlebars-intl");
 var showdown = require("../util/showdown.min.js");
 var Transporter = require("../util/transporter.js");
-var Recaptcha = require("express-recaptcha").Recaptcha;
-
-var recaptcha = new Recaptcha(process.env.RC_KEY, process.env.RC_SECRET);
+var recaptchaRouterFactory = require("invisible-recaptcha");
+var recaptchaRouter = recaptchaRouterFactory(process.env.RC_SECRET, captchaSuccess, captchaFail);
+function captchaSuccess(req, res, next) { next(); }
+function captchaFail(req, res) { res.redirect("/"); }
 
 module.exports = function(app) {
 
@@ -210,14 +211,11 @@ module.exports = function(app) {
   };
 
   // All comment routes
-  app.post("/blog/comment/*", recaptcha.middleware.verify, function (req, res, next) {
-    if(!req.recaptcha.error) {
-      next();
-    } else {
-      console.log("bots!!!");
-      res.redirect("/");
-    }
-  });
+//  app.post("/blog/comment/*", function (req, res, next) {
+//    next();
+//  });
+
+  app.post("/blog/comment/*", recaptchaRouter); 
 
   // Route for comment posts
   app.post("/blog/comment/post", function(req, res) {
