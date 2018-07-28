@@ -8,6 +8,9 @@ var mongoose = require("mongoose");
 var HandlebarsIntl = require("handlebars-intl");
 var showdown = require("../util/showdown.min.js");
 var Transporter = require("../util/transporter.js");
+var Recaptcha = require("express-recaptcha").Recaptcha;
+
+var recaptcha = new Recaptcha(process.env.RC_KEY, process.env.RC_SECRET);
 
 module.exports = function(app) {
 
@@ -136,7 +139,8 @@ module.exports = function(app) {
                   "blogID": commentedBlogID,
                   "tagCount": tagcount,
                   "search": search,
-                  "data": {intl: intlData}
+                  "data": {intl: intlData},
+		  captcha: res.recaptcha
                 });
               }
           });
@@ -206,8 +210,13 @@ module.exports = function(app) {
   };
 
   // All comment routes
-  app.post("/blog/comment/*", spamCheck, function (req, res, next) {
-    next();
+  app.post("/blog/comment/*", recaptcha.middleware.verify, function (req, res, next) {
+    if(!req.recaptcha.error) {
+      next();
+    } else {
+      console.log("bots!!!");
+      res.redirect("/");
+    }
   });
 
   // Route for comment posts
