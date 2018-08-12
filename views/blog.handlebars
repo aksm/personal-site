@@ -60,8 +60,8 @@
                   </ul>
                 </div>
                 {{/if}}
-                <div class="card-action comment-panel-{{blogPost._id}}" id="comment-form" hidden>
-                  <form class="comment-form" method="POST" action="/blog/comment/post?_method=POST">
+                <div class="card-action comment-panel-{{blogPost._id}}" id="comment-form-{{blogPost._id}}" hidden>
+                  <form class="comment-form" id="comment-form-{{blogPost._id}}" method="POST" action="/blog/comment/post?_method=POST">
                     <input name="comment_id" id="comment-id" type="hidden" value="{{blogPost._id}}">
                     <input name="source" id="comment-source" type="hidden" value="permalink">
                     <div class="row">
@@ -80,7 +80,14 @@
                       </div>
                     </div>
                     <div class="row">
-                      <button id="post-comment-1" class="btn-flat waves-effect waves-grey white black-text right disabled post-comment g-recaptcha" data-sitekey="6LfI2GYUAAAAALAXlHogNosnwswQpAYx_GsaEq0c" type="submit" name="action">POST</button>
+                      <button id="post-comment-1" class="btn-flat waves-effect waves-grey white black-text right disabled post-comment g-recaptcha" data-sitekey="6LfI2GYUAAAAALAXlHogNosnwswQpAYx_GsaEq0c" data-callback="onSubmit" type="submit" name="action">POST</button>
+                    </div>
+                    <div class="g-recaptcha"
+                      id="gr-{{blogPost._id}}"
+                      data-sitekey="6LfI2GYUAAAAALAXlHogNosnwswQpAYx_GsaEq0c"
+                      data-callback="onSubmit"
+                      data-badge="inline"
+                      data-size="invisible">
                     </div>
                   </form>
                 </div>

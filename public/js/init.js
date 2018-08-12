@@ -201,4 +201,34 @@
       $("#search-header").trigger("click");
     });
   }); // end of document ready
+  // $(".g-recaptcha").each(function() {
+  //   var object = $(this);
+  //   grecaptcha.render(object.attr("id"), {
+  //       "sitekey" : "6LfI2GYUAAAAALAXlHogNosnwswQpAYx_GsaEq0c",
+  //       "callback" : function(token) {
+  //           object.parents('form').find(".g-recaptcha-response").val(token);
+  //           object.parents('form').submit();
+  //       }
+  //   });
+// });  
 })(jQuery); // end of jQuery name space
+    var onLoad = function() {
+      // widgetId = grecaptcha.render("componentId", {
+      //   "siteKey": "6LfI2GYUAAAAALAXlHogNosnwswQpAYx_GsaEq0c",
+      //   "callback": onSubmit
+      // });
+      var gr = document.getElementsByClassName("g-recaptcha");
+      for(var i = 0; i < gr.length; i++) {
+        var el = gr[i];
+        grecaptcha.render(el.id, {
+        "sitekey" : "6LfI2GYUAAAAALAXlHogNosnwswQpAYx_GsaEq0c",
+        "callback" : function(token) {
+            // el.parents('form').find(".g-recaptcha-response").val(token);
+            el.parentNode.submit();
+        }
+        });
+      }
+    };
+    var onSubmit = function(response) {
+      console.log("success yay");
+    }
