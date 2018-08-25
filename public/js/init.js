@@ -172,12 +172,13 @@
       $("#comment-button-"+activatePost).click();
       // $("#"+activateComment).scrollView();
     }
-    if($('#tag-auto')) {
+    if($('#tag-auto').data("tags")) {
       var chipsArray = $('#tag-auto').data("tags").split(",");
-    }
-    var chipsObject = {};
-    for(var i = 0; i < chipsArray.length - 1; i++) {
-      chipsObject[chipsArray[i]] = null;
+    
+      var chipsObject = {};
+      for(var i = 0; i < chipsArray.length - 1; i++) {
+        chipsObject[chipsArray[i]] = null;
+      }
     }
     $('.chips-autocomplete').material_chip({
       autocompleteData: chipsObject,
