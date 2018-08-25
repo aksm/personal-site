@@ -172,9 +172,9 @@
       $("#comment-button-"+activatePost).click();
       // $("#"+activateComment).scrollView();
     }
-
-    var chipsArray = $('#tag-auto').data("tags").split(",");
-
+    if($('#tag-auto')) {
+      var chipsArray = $('#tag-auto').data("tags").split(",");
+    }
     var chipsObject = {};
     for(var i = 0; i < chipsArray.length - 1; i++) {
       chipsObject[chipsArray[i]] = null;
