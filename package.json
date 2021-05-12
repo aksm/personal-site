@@ -28,7 +28,7 @@
     "method-override": "^2.3.7",
     "mongo-sanitize": "^1.0.0",
     "mongoose": "^4.8.2",
-    "nodemailer": "^2.7.2",
+    "nodemailer": "^6.4.16",
     "path": "^0.12.7"
   },
   "devDependencies": {
